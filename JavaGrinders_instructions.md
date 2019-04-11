@@ -1,4 +1,4 @@
-* from http://javagrinders-arc.blogspot.com/ *
+from http://javagrinders-arc.blogspot.com/
 
 # What you need ...
 
