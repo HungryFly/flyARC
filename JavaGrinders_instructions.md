@@ -20,11 +20,12 @@ A number of libraries, drivers, and applications are required to support the tra
 
 # Installation #1 - Java Standard Edition 8 Development Kit (Java SE 8 JDK)
 The JDK is a development environment for building and running software written in the Java programming language. Most operating systems come pre-installed with the ability to run Java applications via a Java Runtime Environment (JRE). Developing Java software requires additional tools from Java's Software Development Kit (SDK), including the Java Compiler 'javac'.
-Test whether Java SE 8 SDK is already installed
-To test whether Java 8 SDK is available, test for your version of the java compiler 'javac'. Open a Terminal, found in Applications/Utilities on Mac OSX and Terminal Emulator in Linux, and type...
-$ javac -version
-YES: You are fine if the terminal reports any build '1.8.0_*'. This means that you already have a Java Compiler of Version 8. Mine is...
-javac 1.8.0_151
+### Test whether Java SE 8 SDK is already installed
+To test whether Java 8 SDK is available, test for your version of the java compiler 'javac'. 
+Open a Terminal, found in Applications/Utilities on Mac OSX and Terminal Emulator in Linux, and type...
+> $ javac -version
+*YES: You are fine if the terminal reports any build '1.8.0_*'. This means that you already have a Java Compiler of Version 8. Mine is...*
+> javac 1.8.0_151
 This means that a compatible Java SDK is available on your computer, proceed to Installation #2.
 
 
