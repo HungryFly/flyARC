@@ -24,7 +24,9 @@ The JDK is a development environment for building and running software written i
 To test whether Java 8 SDK is available, test for your version of the java compiler 'javac'. 
 Open a Terminal, found in Applications/Utilities on Mac OSX and Terminal Emulator in Linux, and type...
 
-`$ javac -version`
+```bash
+$ javac -version
+```
 
 > YES:
 > You are fine if the terminal reports any build '1.8.0_*'. 
