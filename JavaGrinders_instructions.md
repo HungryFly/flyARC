@@ -2,19 +2,19 @@ from http://javagrinders-arc.blogspot.com/
 
 # What you need ...
 
-- Computer running MacOSX or some flavor of Linux. 
+##### Computer running MacOSX or some flavor of Linux. 
 Preferred and tested OS options are MacOSX 10.11, Xubuntu 18.04, Ubuntu 18.04, Debian Jessie and Stretch. Tracking speed scales up with increased processing power, but even lower hardware specs should be sufficient to run the ARC in its basic capacity.
-- Source of Video Frames. 
+##### Source of Video Frames. 
 A wide range of options are supported via standard drivers through any OpenCV compatible source. This includes most webcams, network cameras, or serial camera modules.
-- Administrator Rights on Computer. 
+##### Administrator Rights on Computer. 
 Account must have with rights to administer the computer as installation of libraries requires the password.
-- Internet access. 
+##### Internet access. 
 You need to obtain the libraries and applications from the internet. Some downloads are fairly large, so a connection via ethernet (or a reliable and fast wifi) are needed.
-- Java Integrated Development Environment (IDE). 
+##### Java Integrated Development Environment (IDE). 
 Eclipse and Netbeans are the dominant players and zipped JavaGrinders_ARC project folders are included for a clean import.
-- Arduino Uno. 
+##### Arduino Uno. 
 This is an open-source, single board microcontroller.
-- Libraries, Drivers, Applications. 
+##### Libraries, Drivers, Applications. 
 A number of libraries, drivers, and applications are required to support the tracking framework and to provide programming access to webcams, usb devices, microcontrollers, and image processing.
 
 
