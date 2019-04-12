@@ -1,12 +1,15 @@
 ---
-
+title: JavaGrinders_instructions
+author: 'Scarlet Park, Robert Huber'
+date: '2019-04-12'
 
 ---
 
 <h1 id="install-open-source-tools-for-running-the-arc-activity-recording-cafe">Install open-source tools for running the ARC (Activity recording CAFE)</h1>
 <p>(<em>from <a href="http://javagrinders-arc.blogspot.com">http://javagrinders-arc.blogspot.com</a></em>)</p>
 <p>This guide walks you through the steps needed to run the ARC instrument. It is a system that permits the automated measurement of motion and food consumption of individual fruit flies. It will show you how to download a number of open source software tools, to set them up in a way that they play nicely with each other, and to make them available to the JavaGrinders framework for the control of behavioral experiments. These instructions cover Mac OSX 10.11.6, xUbuntu 16.04, and Raspbian Jessie (for Raspberry Pi 3B), and Ubuntu 16.04 Arm64 (for Odroid C2). Help in adding instructions for Windows 7-9 or Windows 10 are always greatly welcome.</p>
-<p><code>[TOC]</code></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<p>[TOC]</p>
 <h2 id="what-you-need-...">What you need …</h2>
 <ul>
 <li>
