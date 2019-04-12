@@ -224,7 +224,7 @@ This will import the ARC project into your package explorer.</p>
 <p>Choose your Arduino Board in <em>Tools</em> &gt; <em>Board</em> and select your port in <em>Tools</em> &gt; <em>Port</em></p>
 </li>
 <li>
-<p>Click the JArduinoFirmware.ino window’s “Upload button” [1]<br>
+<p>Click the JArduinoFirmware.ino window’s “Upload button” <sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup><br>
 <img src="https://www.arduino.cc/en/uploads/Guide/UNO_Upload.png" alt="Arduino IDE upload button"><br>
 to upload the sketch to the board.</p>
 </li>
@@ -250,5 +250,11 @@ to upload the sketch to the board.</p>
 <p>This page was last updated April 12, 2019.</p>
 <p>The most recent up-to-date instructions for installations can always be found on the <a href="http://javagrinders-arc.blogspot.com/">JavaGrinders-ARC blog</a> maintained by <a href="https://caspar.bgsu.edu/~lobsterman/Page/index.shtml">Dr. Robert Huber</a> at Bowling Green State University.</p>
 <p>For more information and support, please contact the owner of this repo or refer to the Nat Prot <a href="https://www.nature.com/articles/nprot.2017.096">article</a> for contact information .</p>
-<p>[1]: Image from <a href="https://www.arduino.cc/en/Guide/ArduinoUnoWiFi">https://www.arduino.cc/en/Guide/ArduinoUnoWiFi</a></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Image from <a href="https://www.arduino.cc/en/Guide/ArduinoUnoWiFi">https://www.arduino.cc/en/Guide/ArduinoUnoWiFi</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
 
