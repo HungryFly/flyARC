@@ -1,8 +1,3 @@
----
-
-
----
-
 <p>Copy and download files from the following links:</p>
 <ol>
 <li><a href="https://www.tinkercad.com/things/kH0fTTrz5GO-two-choice-arc-and-gate">Two choice ARC and gate</a></li>
