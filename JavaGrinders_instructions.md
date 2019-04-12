@@ -1,143 +1,253 @@
-from http://javagrinders-arc.blogspot.com/
-
-# What you need ...
-
-##### Computer running MacOSX or some flavor of Linux. 
-Preferred and tested OS options are MacOSX 10.11, Xubuntu 18.04, Ubuntu 18.04, Debian Jessie and Stretch. Tracking speed scales up with increased processing power, but even lower hardware specs should be sufficient to run the ARC in its basic capacity.
-##### Source of Video Frames. 
-A wide range of options are supported via standard drivers through any OpenCV compatible source. This includes most webcams, network cameras, or serial camera modules.
-##### Administrator Rights on Computer. 
-Account must have with rights to administer the computer as installation of libraries requires the password.
-##### Internet access. 
-You need to obtain the libraries and applications from the internet. Some downloads are fairly large, so a connection via ethernet (or a reliable and fast wifi) are needed.
-##### Java Integrated Development Environment (IDE). 
-Eclipse and Netbeans are the dominant players and zipped JavaGrinders_ARC project folders are included for a clean import.
-##### Arduino Uno. 
-This is an open-source, single board microcontroller.
-##### Libraries, Drivers, Applications. 
-A number of libraries, drivers, and applications are required to support the tracking framework and to provide programming access to webcams, usb devices, microcontrollers, and image processing.
+---
 
 
-# Installation #1 - Java Standard Edition 8 Development Kit (Java SE 8 JDK)
-The JDK is a development environment for building and running software written in the Java programming language. Most operating systems come pre-installed with the ability to run Java applications via a Java Runtime Environment (JRE). Developing Java software requires additional tools from Java's Software Development Kit (SDK), including the Java Compiler 'javac'.
-### Test whether Java SE 8 SDK is already installed
-To test whether Java 8 SDK is available, test for your version of the java compiler 'javac'. 
-Open a Terminal, found in Applications/Utilities on Mac OSX and Terminal Emulator in Linux, and type...
+---
 
-```bash
-$ javac -version
-```
+<h1 id="install-open-source-tools-for-running-the-arc-activity-recording-cafe">Install open-source tools for running the ARC (Activity recording CAFE)</h1>
+<p>(<em>from <a href="http://javagrinders-arc.blogspot.com">http://javagrinders-arc.blogspot.com</a></em>)</p>
+<p>This guide walks you through the steps needed to run the ARC instrument. It is a system that permits the automated measurement of motion and food consumption of individual fruit flies. It will show you how to download a number of open source software tools, to set them up in a way that they play nicely with each other, and to make them available to the JavaGrinders framework for the control of behavioral experiments. These instructions cover Mac OSX 10.11.6, xUbuntu 16.04, and Raspbian Jessie (for Raspberry Pi 3B), and Ubuntu 16.04 Arm64 (for Odroid C2). Help in adding instructions for Windows 7-9 or Windows 10 are always greatly welcome.</p>
+<p>[TOC]</p>
+<h2 id="what-you-need-...">What you need …</h2>
+<ul>
+<li>
+<p><strong>Computer running MacOSX or some flavor of Linux.</strong> Preferred and tested OS options are MacOSX 10.11, Xubuntu 18.04, Ubuntu 18.04, Debian Jessie and Stretch. Tracking speed scales up with increased processing power, but even lower hardware specs should be sufficient to run the ARC in its basic capacity.</p>
+</li>
+<li>
+<p><strong>Source of Video Frames.</strong> A wide range of options are supported via standard drivers through any OpenCV compatible source. This includes most webcams, network cameras, or serial camera modules.</p>
+</li>
+<li>
+<p><strong>Administrator Rights on Computer.</strong> Account must have with rights to administer the computer as installation of libraries requires the password.</p>
+</li>
+<li>
+<p><strong>Internet access.</strong>  You need to obtain the libraries and applications from the internet. Some downloads are fairly large, so a connection via ethernet (or a reliable and fast wifi) are needed.</p>
+</li>
+<li>
+<p><strong>Java Integrated Development Environment (IDE).</strong> Eclipse and Netbeans are the dominant players and zipped JavaGrinders_ARC project folders are included for a clean import.</p>
+</li>
+<li>
+<p><strong>Arduino Uno.</strong> This is an open-source, single board microcontroller.</p>
+</li>
+<li>
+<p><strong>Libraries, Drivers, Applications.</strong> A number of libraries, drivers, and applications are required to support the tracking framework and to provide programming access to webcams, usb devices, microcontrollers, and image processing.</p>
+</li>
+</ul>
+<h2 id="installation-1---java-standard-edition-8-development-kit-java-se-8-jdk">Installation #1 - Java Standard Edition 8 Development Kit (Java SE 8 JDK)</h2>
+<p>The JDK is a development environment for building and running software written in the Java programming language. Most operating systems come pre-installed with the ability to run Java applications via a Java Runtime Environment (JRE). Developing Java software requires additional tools from Java’s Software Development Kit (SDK), including the Java Compiler ‘javac’.</p>
+<h3 id="test-whether-java-se-8-sdk-is-already-installed">Test whether Java SE 8 SDK is already installed</h3>
+<p>To test whether Java 8 SDK is available, test for your version of the java compiler ‘javac’. Open a Terminal, found in Applications/Utilities on Mac OSX and Terminal Emulator in Linux, and type…</p>
+<pre><code>$ javac -version
+</code></pre>
+<dl>
+<dt>YES:</dt>
+<dd> You are fine if the terminal reports any build <b>'1.8.0_*' </b>. <br> This means that you already have a Java Compiler of Version 8. Mine is </dd> </dl>
+<pre><code> javac 1.8.0_151
+</code></pre>
+<p><strong>NO:</strong></p>
+<p>If the terminal reports that no SDK is available</p>
+<pre><code>-bash: javac: command not found
+</code></pre>
+<p>or if a version prior to 8 is found, then you need to download and install the <em>Java SE 8 or later Development Kit</em>. The ARC framework works well with the JDK for Java 11 and my recommendation is to use the newest version.</p>
+<h4 id="installation-instructions---macosx">Installation Instructions - MacOSX:</h4>
+<p>Install the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit 8 from Oracle</a> and download the installation package for OSX or the one that matches your type of Linux. Open the downloaded <em>jdk-8</em> disk image and install the Java framework by following the instructions in the Java SDK 8 Installer.</p>
+<p>Add the JAVA_HOME definition for the path to your jre into your <code>/etc/environment</code> login file. You can only do that when you are logged in as ‘root’, then logout from ‘root’ with <code>exit</code>. Touch the new version of <code>/etc/environment</code> with the command <code>source</code>.</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> -i
+$ <span class="token keyword">echo</span> <span class="token string">'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64'</span> <span class="token operator">&gt;&gt;</span> /etc/environment
+$ <span class="token keyword">exit</span>
+$ <span class="token function">source</span> /etc/environment
+</code></pre>
+<h4 id="installation-instructions---linux">Installation Instructions - Linux:</h4>
+<p>Open the Terminal Emulator and install OpenJDK with …</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> update
+$ <span class="token function">sudo</span> apt <span class="token function">install</span> default-jdk
+</code></pre>
+<p>On most recent OS versions this will install Java 11, which works well for our use. You also need to install ant to be able to generate the java bindings for OpenCV</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> ant
+</code></pre>
+<p>Follow the online instructions, and agree to the license agreement. You then need to set the JAVA_HOME property to point to the new Oracle Java framework.</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> update-alternatives --config java
+</code></pre>
+<p>Select the version you want to use as default and copy the path to the installation. In my installation of Ubuntu this is at <code>/usr/lib/jvm/java-8-openjdk/jre/bin/java</code>.</p>
+<p>Add the <code>JAVA_HOME</code> definition for the path to your jre into your <code>/etc/environments</code> login file. You can only do that when you are logged in as ‘root’, then logout from ‘root’ with <code>exit</code>. Touch the new version of <code>/etc/environment</code> with the command <code>source</code>.</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> -i
+$ <span class="token keyword">echo</span> <span class="token string">'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64'</span> <span class="token operator">&gt;&gt;</span> /etc/environment
+$ <span class="token keyword">exit</span>
+$ <span class="token function">source</span> /etc/environment
+</code></pre>
+<p>After this your <code>$JAVA_HOME</code> path should be set. <code>echo $JAVA_HOME</code> should report</p>
+<pre class=" language-bash"><code class="prism  language-bash">usr/lib/jvm/java-8-openjdk-amd64
+</code></pre>
+<h2 id="installation-2---java-ide">Installation #2 - Java IDE</h2>
+<p>Eclipse, Netbeans, and IntelliJ are programming Environments for Java.</p>
+<h3 id="test-whether-netbeanseclipseintellij-is-already-installed">Test whether Netbeans/Eclipse/IntelliJ is already installed</h3>
+<p>Search for Eclipse, Netbeans, or IntelliJ. If you find it, start the application, open the Preferences dialog by clicking on the <em>Eclipse</em> menu and selecting the <em>Preferences</em> menu item (MacOSX) or clicking on the <em>Windows</em> menu and selecting the <em>Preferences</em> menu item (Linux).</p>
+<p>OpenCV 3 requires Java version 8 or higher. To confirm a compatible Java Runtime Environment (JRE) for your programming, expand the node <em>Java</em> in the left hand side of the dialog box. A version of Java 1.8 should be your default version in <em>Installed JREs</em>.</p>
+<dl> 
+<dt> YES:  </dt>
+<dd> You are fine if you have Netbeans or Eclipse with Java already. </dd>
+<dd> Proceed to <em>Installation #3</em>. </dd> </dl>
+<p><strong>NO:</strong></p>
+<p>If you do not find the Eclipse (or Netbeans) Application in your installation, install an IDE.</p>
+<p>Download the  <a href="http://www.eclipse.org/downloads/packages/release/Neon/3">Eclipse IDE for Java Developers</a> package for your OS. I am using Eclipse Photon (i.e. version 4.8) along with Java 11. If you prefer Netbeans, go to  <a href="https://netbeans.apache.org/download/index.html">Apache Netbeans Downloads</a>  and use version 9.</p>
+<p>Uncompress the archive, and drag the resulting Eclipse Application into your Applications folder. Start Eclipse and confirm the default workspace in the next window. Check the “Use this as the default …” box.</p>
+<p>Confirm a compatible Java Runtime Environment (JRE) for your programming by expanding the node <em>Java</em> in the left hand side of the dialog box. A version of Java 1.8 should be your default version in <em>Installed JREs</em>.</p>
+<p>Select the Java Browsing Perspective in “Window” -&gt; “Perspective” -&gt; “Open Perspective” -&gt; “Java Browsing”.</p>
+<h2 id="installation-3---opencv">Installation #3 - OpenCV</h2>
+<p><a href="http://opencv.org/">OpenCV</a> has emerged as the dominant technology to interface with video cameras, read their frame buffers, and process the resulting frames. Use of OpenCV requires successful installation of the library along with its dependencies. This blog guides you through the steps necessary for using OpenCV on MacOSX and Linux.</p>
+<h3 id="test-whether-opencv-and-java-bindings-are-already-installed">Test whether OpenCV and Java Bindings are already installed</h3>
+<p>Open the Terminal application and test for opencv:</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ pkg-config --modversion opencv
+</code></pre>
+<p>Then check whether opencv contains the java bindings in one of these locations:</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">ls</span> /opt/local/share/OpenCV/java/
+$ <span class="token function">ls</span> /usr/local/share/OpenCV/java/
+$ <span class="token function">ls</span> /usr/share/OpenCV/java/
+</code></pre>
+<dl>
+<dt><strong>YES:</strong></dt>
+<dd>
+<p>You are all set if your system reports OpenCV <code>3.2.0</code> or higher<br>
+and if the <code>/usr/share/OpenCV/java/</code> folder contains the following file<br>
+<code>opencv-320.jar</code></p>
+</dd>
+<dd>
+<p>On Linux, the dynamic library itself has extension ‘<em>.so</em>’ instead of ‘<em>.dylib</em>’ and should be at <code>/usr/lib/jni/</code>. If so, the system already has a recent enough version of the OpenCV library installed, along with the needed bindings. Proceed to <em>Installation #4</em>.</p>
+</dd>
+</dl>
+<p><strong>NO:</strong></p>
+<p>If the Terminal reports an earlier version of OpenCV, or does not find this library at all, then you need to download the library.</p>
+<h4 id="installation-instructions----mac-osx">Installation instructions – Mac OSX:</h4>
+<p>For Mac OSX this set of instructions covers OSX 10.11 (and newer), but may work on older versions of OSX as well (<em>not tested though</em>). The simplest way to install is via the package installer <em>MacPorts</em>.</p>
+<p>Select the version of MacPorts for your installed version of OSX from <a href="http://www.macports.org/install.php">here</a> and download it. Double click the MacPorts*.pkg and follow the instructions.</p>
+<p>Then open the Terminal In your Applications/Utilities folder and type …</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> port selfupdate
+</code></pre>
+<p>This will update MacPorts with the most recent information on package versions. The command <code>sudo</code> means <em>“superuser do”</em> and will require that you type in your computer’s password. Once the self-update has completed, it will prompt you to install the Xcode command line tools. Agree to the install as well as accept the license.</p>
+<blockquote>
+<p>Alternatively, you can manually perform an install of the Xcode Command Line Tools with …</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> xcode-select --install
+$ <span class="token function">sudo</span> xcodebuild -license
+</code></pre>
+</blockquote>
+<p>Then install opencv with java bindings using your spanking new version of javac, MacPorts and Xcode tools.</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> port <span class="token function">install</span> opencv +java
+</code></pre>
+<blockquote>
+<p>No worries about <em>"Warning: Xcode does not appear to be installed… "</em> - there is no need for the full version of Xcode here. MacPorts will figure out which libraries are needed for OpenCV, and it will go through installing each one in the correct order. MacPorts will slowly crunch through the dependencies for ant, ffmpeg, and others.</p>
+</blockquote>
+<p>Be prepared that this may take some time. When you get the Terminal message that no broken links were found, then you are cooking with gas.</p>
+<p>The default destination for OpenCV is in directory <code>/opt/local/share/OpenCV/</code>. The java bindings for Opencv are installed in directory <code>/opt/local/share/OpenCV/java/</code>.</p>
+<h4 id="installation-instructions----linux">Installation instructions – Linux:</h4>
+<p>Install version 3.2 from the repository.</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> update  
+$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libopencv-dev
+</code></pre>
+<p>This will install the <code>opencv-320.jar</code> file at <code>/usr/share/OpenCV/java/</code> and <code>libopencv-320.so</code> in <code>/usr/lib/jni</code>.</p>
+<h2 id="installation-4---import-the-arccontroller-project-into-ide-and-run">Installation #4 - Import the ARCController Project into IDE and Run</h2>
+<h3 id="eclipse">Eclipse</h3>
+<ol>
+<li>
+<p>Download the <a href="http://caspar.bgsu.edu/~software/Java_Support/Projects_All/JavaGrinders_ARC.zip">zip compressed eclipse archive</a> for the ARC Controller.</p>
+</li>
+<li>
+<p>Copy the downloaded file into your Eclipse workspace and unzip the archive.</p>
+</li>
+<li>
+<p>In Eclipse, go to your package explorer by clicking on the <em>Windows</em> menu and then selecting <em>Show View</em> &gt; <em>Package Explorer</em> menu items.</p>
+</li>
+<li>
+<p>Start a New Java Project by clicking on the <em>New</em> menu, <em>Project</em> menu item, and then under the <em>Java</em> section, select <em>Java Project</em>.</p>
+</li>
+<li>
+<p>In the <em>Java Project Wizard</em>, enter Project name <strong>JavaGrinders_ARC</strong> and click the <em>Finish</em> Button.<br>
+This will import the ARC project into your package explorer.</p>
+</li>
+<li>
+<p>Navigate into your <em>JavaGrinders_ARC</em> -&gt; <em>src</em> -&gt; <em>_ARC</em> and select the file <u>ARCController.java</u>.</p>
+</li>
+<li>
+<p>Under the menu <em>Run</em>, click on the menu item <em>Run</em>.</p>
+</li>
+</ol>
+<p>On startup, the tracker program will first look for a video camera (and your Arduino, if applicable). It will then start the tracker and open the main window.</p>
+<h3 id="netbeans">NetBeans</h3>
+<ol>
+<li>
+<p>Download the <a href="http://caspar.bgsu.edu/~software/Java_Support/Projects_NetBeans/JavaGrinders_ARC-netbeans.zip">zip compressed netbeans archive</a> for the ARC Controller.</p>
+</li>
+<li>
+<p>In Netbeans, click on the menu <em>File</em> &gt; <em>Import Project</em> &gt; <em>From ZIP…</em> and browse to the downloaded zip archive.</p>
+</li>
+<li>
+<p>Navigate into your <em>JavaGrinders_ARC</em> &gt; <em>Source Packages</em> &gt; <em>_ARC</em> and select the file ARCController.java.</p>
+</li>
+<li>
+<p>Under the menu <em>Run</em>, click on the menu item <em>Run Project</em>.</p>
+</li>
+</ol>
+<p>On startup, the tracker program will first look for a video camera (and your Arduino, if applicable).  It will then start the tracker and open the main window.</p>
+<h2 id="installation-5-optional---confirm-that-the-plugged-in-arduino-is-loaded-as-a-usb-communication-device-cdc">Installation #5 (<em>optional</em>) - Confirm that the plugged-in Arduino is loaded as a USB communication device (CDC)</h2>
+<p>Without having the Arduino pluged into a USB port, open the Terminal application, and type</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">ls</span> /dev/tty*
+</code></pre>
+<p>This will report all currently established devices in this category.</p>
+<p>Then plug the Arduino into a USB port and reissue the command. If the system contains a driver for the serial chip of the Arduino and is able to load it, a new device will appear in this list.</p>
+<dl>
+<dt><strong>YES:</strong></dt>
+<dd>You are all set if your system finds a new device of sub-type “abstract control model” (ACM).</dd>
+<dd>On mac, this will list something like:</dd>
+<dd>
+<pre><code>   /dev/tty.usbmodem1A21
+</code></pre>
+</dd>
+<dd>On Linux Ubuntu, it will be something like:</dd>
+<dd>
+<pre><code>  /dev/ttyACM0
+</code></pre>
+</dd>
+</dl>
+<p><strong>NO:</strong></p>
+<p>If the Terminal fails to establish a communication channel with the Arduino you will have to delve into drivers.</p>
+<h4 id="installation-instructions----mac-osx-1">Installation instructions – Mac OSX:</h4>
+<p>Original Arduinos use an FTDI usb to serial chip which should be recognized by the MacOS automatically. If you use a cheaper Arduino clone (like I do), chances are that the manufacturer has replaced the FTDI chip with the cheaper CH34X version from Jiangsu Qinheng Co., Ltd. The likely outcome is that the board is not recognized as a valid serial port until you have downloaded and installed the <a href="https://kig.re/2014/12/31/how-to-use-arduino-nano-mini-pro-with-CH340G-on-mac-osx-yosemite.html">relevant driver</a>. After restarting the computer, your Terminal window should report a valid serial port associated with the Arduino.</p>
+<h4 id="installation-instructions----linux-1">Installation instructions – Linux:</h4>
+<p>Modern versions of the Linux kernel have the driver for this chip included. Consider upgrading to Ubuntu 18.04 or later.</p>
+<h2 id="installation-6-optional---install-jarduino-firmware-on-arduino-for-stimulus-delivery">Installation #6 (<em>optional</em>) - Install JArduino Firmware on Arduino for stimulus delivery</h2>
+<p>You need the <a href="https://www.arduino.cc/en/main/software">Arduino IDE</a> to communicate with the Arduino board (currently at version 1.8.5).</p>
+<ol>
+<li>
+<p>Download the <a href="http://caspar.bgsu.edu/~software/Java_Support/JArduino.zip">JArduino Folder</a> containing the JArduino Firmware and place the extracted folder into your Arduino <em>Library</em>.</p>
+<blockquote>
+<p>(Location is inside your Sketchbook Folder as specified in <em>Arduino</em> &gt; <em>Preferences</em>.)</p>
+</blockquote>
+</li>
+<li>
+<p>Choose your Arduino Board in <em>Tools</em> &gt; <em>Board</em> and select your port in <em>Tools</em> &gt; <em>Port</em></p>
+</li>
+<li>
+<p>Click the JArduinoFirmware.ino window’s “Upload button”<br>
+<img src="https://www.arduino.cc/en/uploads/Guide/UNO_Upload.png" alt="Arduino IDE upload button"><br>
+to upload the sketch to the board.</p>
+</li>
+<li>
+<p>After completion, shut down the Arduino IDE.</p>
+</li>
+</ol>
+<p>This upload procedure only needs to be done once as the Firmware will remain on the board indefinitely (or until another sketch is manually uploaded over it).</p>
+<blockquote>
+<p>On Linux, you may run into a permission error in uploading your sketch to the <code>/dev/ttyACM0</code> port.</p>
+<p>You can list permission for all ACM* ports with:</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">ls</span> -l /dev/tty.ACM*
+</code></pre>
+<p>which may report something like:</p>
+<pre class=" language-bash"><code class="prism  language-bash">crw-rw---- 1 root dialout 188, 0 5 apr 23.01 ttyACM0
+</code></pre>
+<p>To access the port, you  need to add your username to the dialout group for access using</p>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">sudo</span> <span class="token function">usermod</span> -a -G dialout <span class="token operator">&lt;</span>username<span class="token operator">&gt;</span>
+</code></pre>
+</blockquote>
+<h2 id="brbrbrbrbr"><br><br><br><br><br></h2>
+<p><strong>Note:</strong></p>
+<p>This page was last updated April 12, 2019.</p>
+<p>The most recent up-to-date instructions for installations can always be found on the <a href="http://javagrinders-arc.blogspot.com/">JavaGrinders-ARC blog</a> maintained by <a href="https://caspar.bgsu.edu/~lobsterman/Page/index.shtml">Dr. Robert Huber</a> at Bowling Green State University.</p>
+<p>For more information and support, please contact the owner of this repo or refer to the Nat Prot <a href="https://www.nature.com/articles/nprot.2017.096">article</a> for contact information .</p>
 
-> YES:
-> You are fine if the terminal reports any build '1.8.0_*'. 
-> This means that you already have a Java Compiler of Version 8. Mine is...
-> `> javac 1.8.0_151`
-
-This means that a compatible Java SDK is available on your computer, proceed to Installation #2.
-
-
-NO: If the terminal reports that no SDK is available 
--bash: javac: command not found
-or if a version prior to 8 is found, then you need to download and install the Java SE 8 or later Development Kit. The ARC framework iworks well with the JDK for Java 11 and my recommendation is to use the newest version.
-Installation Instructions - MacOSX: Install the Java SE Development Kit 8 from Oracle and download the installation package for OSX or the one that matches your type of Linux. Open the downloaded jdk-8* disk image and install the Java framework by following the instructions in the Java SDK 8 Installer.
-JAVA_HOME definition for the path to your jre into your /etc/environments login file. You can only do that when you are logged in as 'root', then logout from 'root' with 'exit'. Touch the new version of /etc/environment with the command 'source'.
-$ sudo -i
-$ echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /etc/environment
-$ exit
-$ source /etc/environment
-Installation Instructions - Linux: Open the Terminal Emulator and install OpenJDK with ...
-$ sudo apt-get update
-$ sudo apt install default-jdk
-On most recent OS versions this will install Java 11, which works well for our use.You also need to install ant to be able to generate the java bindings for OpenCV
-$ sudo apt-get install ant
-Follow the online instructions, and agree to the license agreement. You then need to set the JAVA_HOME property to point to the new Oracle Java framework.
-$ sudo update-alternatives --config java
-Select the version you want to use as default and copy the path to the installation. In my installation of Ubuntu this is at '/usr/lib/jvm/java-8-openjdk/jre/bin/java'. Add the JAVA_HOME definition for the path to your jre into your /etc/environments login file. You can only do that when you are logged in as 'root', then logout from 'root' with 'exit'. Touch the new version of /etc/environment with the command 'source'.
-$ sudo -i
-$ echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /etc/environment
-$ exit
-$ source /etc/environment
-After this your $JAVA_HOME path should be set 
-$ echo $JAVA_HOME
-should report
-usr/lib/jvm/java-8-openjdk-amd64
-Installation Instructions - Windows 7, 8: ...
-Installation Instructions - Windows 10: ...
-Installation #2 - Java IDE
-Eclipse, Netbeans, and IntelliJ are programming Environments for Java.
-Test whether Netbeans/Eclipse/IntelliJ is already installed
-
-
-On MacOSX click on MenuItem File -> Find. in Linux search for name 'Eclipse' or 'Netbeans' or 'IntelliJ' with Kind is Application. If you find it, start the application, select Menuitem Preferences from Eclipse -> Preferences (on MacOSX) or Windows -> Preferences (on Linux).
-
-YES: You are fine if you have Netbeans or Eclipse with Java already, proceed to Installation #3.
-
-NO: If you do find the Eclipse (or  Netbeans) Application in your Installation install an IDE
-Installation Instructions - Mac OSX, Linux, Windows: Download the Eclipse IDE for Java Developers package for your OS. I am using Eclipse Photon (i.e. version 4.8) along with Java 11. If you prefer Netbeans, go to Apache Netbeans Downloads and use version 9.
-Uncompress the archive, and drag the resulting Eclipse Application into your Applications folder. Start Eclipse and confirm the default workspace in the next window. Check the "Use this as the default ..." box.
-OpenCV 3 requires Java version 8 or higher. To confirm a compatible Java Runtime Environment (JRE) for your programming, select Menu "Eclipse -> Preferences..." and expand the item "Java". A version of Java 1.8 should be your default version in "Installed JREs".
-Select the Java Browsing Perspective in Menu Item 'Window -> Perspective -> Open Perspective -> Java Browsing'.
-Installation #3 - OpenCV
-OpenCV has emerged as the dominant technology to interface with video cameras, read their frame buffers, and process the resulting frames. Use of OpenCV requires successful installation of the library along with its dependencies. This blog guides you through the steps necessary for using OpenCV on MacOSX and Linux.
-Test whether OpenCV and Java Bindings are already installed
-Open the Terminal application and test for opencv
-$ pkg-config --modversion opencv
-Then check whether opencv contains the java bindings in one of these locations
-$ ls /opt/local/share/OpenCV/java/
-$ ls /usr/local/share/OpenCV/java/
-$ ls /usr/share/OpenCV/java/ 
- YES: You are all set if your system reports OpenCV 3.2.0 or higher
-3.2.0
- and if the /usr/share/OpenCV/java/ folder contains the following file
-opencv-320.jar
-On Linux the dynamic library itself has extension '.so' instead of  '.dylib' and should be at /usr/lib/jni/. If so, the system already has a recent enough version of the OpenCV library installed, along with the needed bindings. Proceed to Installation #3.
-
-NO: If the Terminal reports an earlier version of OpenCV, or does not find this library at all, then you need to download the library.
-Installation Instructions - Mac OSX: For Mac OSX this set of instructions covers OSX 10.11 (and newer), but may work on older versions of OSX as well (- not tested though). The simplest way to install is via the package installer MacPorts. Select the version of MacPorts for your installed version of OSX from here and download it. Double click the MacPorts*.pkg and follow the instructions.
-Then open the Terminal In your Applications/Utilities folder and type ...
-$ sudo port selfupdate
-This will update MacPorts' with the most recent information on package versions. The command sudo means "superuser do" and will require that you type in your computer's password. Once the self-update has completed, it will prompt you to install the Xcode command line tools. Agree to the install as well as accept the license. Alternatively, you can manually perform an install of the Xcode Command Line Tools with ...
-$ sudo xcode-select --install
-$ sudo xcodebuild -license 
-Then install opencv with java bindings using your spanking new version of javac, MacPorts and Xcode tools. 
-$ sudo port install opencv +java
-No worries about "Warning: Xcode does not appear to be installed... " - there is no need for the full version of Xcode here. MacPorts will figure out which libraries are needed for OpenCV, and it will go through installing each one in the correct order. MacPorts will slowly crunch through the dependencies for ant, ffmpeg, and others. Be prepared that this may take some time. When you get the Terminal message that no broken links were found, then you are cooking with gas. The default destination for OpenCV is in directory /opt/local/share/OpenCV/. The java bindings for Opencv are installed in directory /opt/local/share/OpenCV/java/
-Installation Instructions - Linux: Install version 3.2 from the repository.
-
-$ sudo apt-get update
-$ sudo apt-get install libopencv-dev
-This will install the 'opencv-320.jar' file at /usr/share/OpenCV/java/ and 'libopencv-320.so' in /usr/lib/jni
-Installation Instructions - Windows 7, 8: ...
-Installation Instructions - Windows 10: ...
-Installation #4 - Import the ARCController Project into IDE and Run
-Eclipse
-Download the 'zip compressed eclipse archive' for the ARC Controller, copy it into your Eclipse workspace, and unzip the archive. In Eclipse, go to your package explorer by selecting Menu Item 'Window -> Show View -> Package Explorer'. Start a New Java Project by selecting Menu Item 'New -> Project...', and select 'Java Project' from the Java Section. In the Java Project Wizard enter Project name 'JavaGrinders_ARC' and click the Finish Button. This will import the ARC project into your package explorer. Navigate into your JavaGrinders_ARC -> src -> _ARC' and select the file ARCController.java. Select Menu Item 'Run -> Run'. On startup the tracker program will first look for a video camera and your Arduino, it will then start the tracker and open the main window.
-NetBeans
-Download the 'zip compressed netbeans archive' of the ARC Controller Project. In Netbeans, select Menu Item 'File -> Import Project -> From ZIP...' and browse to the downloaded zip archive. Navigate into your JavaGrinders_ARC -> Source Packages -> _ARC' and select the file ARCController.java. Select Menu Item 'Run -> Run Project'. On startup the tracker program will first look for a video camera and your Arduino, it will then start the tracker and open the main window.
-Installation #5 - Optional - Confirm that the plugged-in Arduino is loaded as a USB communication device (CDC)
-Without having the Arduino plugged into a USB port, open the Terminal application, and type
-$ ls /dev/tty*
-This will report all currently established devices in this category. Then plug the Arduino into a USB port and reissue the command. If the system contains a driver for the serial chip of the Arduino and is able to load it, a new device will appear in this list.
-
- YES: You are all set if your system finds a new device of sub-type "abstract control model" (ACM). On Mac this will list something like
-/dev/tty.usbmodem1A21
- On Linux Ubuntu it will be something like
-/dev/ttyACM0
-NO: If the Terminal fails to establish a communication channel with the Arduino you will have to delve into drivers
-Installation Instructions - Mac OSX: Original Arduinos use an FTDI usb to serial chip which should be recognized by the MacOS automatically. If you use a cheaper Arduino clone (like I do), chances are that the manufacturer has replaced the FTDI chip with the cheaper CH34X version from Jiangsu Qinheng Co., Ltd. The likely outcome is that the board is not recognized as a valid serial port until you have downloaded and installed the relevant driver from here. After restarting the computer, your terminal window should report a valid serial port associated with the Arduino.
-Installation Instructions - Linux: Modern versions of the Linux kernel have the driver for this chip included. Consider upgrading to Ubuntu 18.04 or later
-Installation #6 - Optional - Install JArduino Firmware on Arduino for stimulus delivery
-You need the Arduino IDE to communicate with the Arduino board (currently at version 1.8.5). Download the JArduino Folder containing the JArduino Firmware and place the extracted folder into your Arduino "library" folder (location is inside your Sketchbook Folder as specified in Menu Arduino -> Preferences). Choose your Arduino Board in Menu Tools -> Board, then select the port with 'Menu -> Port' and click the JArduinoFirmware.ino window's right arrow button to upload the sketch to the board. After completion shut down the Arduino IDE. This only needs to be done once as the Firmware will remain on the board indefinitely (or until another sketch is manually uploaded over it)
-
-NO: If the Terminal fails to establish a communication channel with the Arduino you will have to delve into drivers
-Installation Instructions - Linux: On Linux you may run into a permission error in uploading your sketch to the /dev/ttyACM0 port. You can list permission for all ACM* ports with
-ls -l /dev/tty.ACM*
-which may report something like
-crw-rw---- 1 root dialout 188, 0 5 apr 23.01 ttyACM0
-To access the port you then need to add your username to the dialout group for access using 
-sudo usermod -a -G dialout <username>
-Posted 26th January 2017 by Unknown
-  
-0  Add a comment
-
-Loading
