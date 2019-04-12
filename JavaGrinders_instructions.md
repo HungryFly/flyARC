@@ -1,6 +1,4 @@
 ---
-title: JavaGrinders_instructions
-author: 'Scarlet Park, Robert Huber'
 date: '2019-04-12'
 
 ---
