@@ -1,3 +1,21 @@
+Repo last updated 4/13/2019 SP
+
 repository for Activity Recording CAFE (ARC) and analysis software
 Refer to Murphy et al. (2017) Nat Prot for detailed instructions
+
 https://www.nature.com/articles/nprot.2017.096
+
+The folders are as follows:
+
+- instructions:
+Instruction page for JavaGrinders installation and instruction video for setting up/running the ARC
+
+- JavaGrinders_files:
+Software for running the ARC, including the JavaGrinders library and Arduino sketch for controlling motors for arousal threshold measurement; 
+Copied from JavaGrinders-ARC blog 4/12/2019
+
+- 3d_print_objects:
+.STL objects and Tinkercad links for 3d printable ARC components
+
+- Noah_forAnalyses:
+python code for analyzing ARC Controller output
