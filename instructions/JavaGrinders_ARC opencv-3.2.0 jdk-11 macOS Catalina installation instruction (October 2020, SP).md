@@ -1,231 +1,209 @@
-﻿<!DOCTYPE html>
-<html>
+# JavaGrinders_ARC with OpenCV 3.2.0 and OpenJDK11 --- installation support instructions
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaGrinders_ARC opencv-3.2.0 jdk-11 macOS Catalina installation instruction (October 2020, SP)</title>
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
-</head>
+(Updated 10/25/2020 by [Scarlet Park](mailto:jpark@scripps.edu))
 
-<body class="stackedit">
-  <div class="stackedit__left">
-    <div class="stackedit__toc">
-      
-<ul>
-<li><a href="#javagrinders_arc-with-opencv-3.2.0-and-openjdk11-----installation-support-instructions">JavaGrinders_ARC with OpenCV 3.2.0 and OpenJDK11 — installation support instructions</a>
-<ul>
-<li><a href="#useful-keyboard-shortcuts-and-commands">Useful keyboard shortcuts and commands</a></li>
-<li><a href="#install-necessary-tools-packages-and-dependencies">Install necessary tools, packages, and dependencies</a></li>
-<li><a href="#installing-opencv-3.2.0">Installing OpenCV 3.2.0</a></li>
-<li><a href="#install-eclipse-ide-for-java-developers">Install Eclipse IDE for Java Developers</a></li>
-<li><a href="#import-javagrinders_arc-and-opencvtest">Import JavaGrinders_ARC and OpenCVTest</a></li>
-</ul>
-</li>
-</ul>
+Versions used in this instruction support:
+: Mac OS X Catalina
+: Java (OpenJDK 11)
+: JavaGrinders Library version 56
+: OpenCV 3.2.0
+: Eclipse Photon
 
-    </div>
-  </div>
-  <div class="stackedit__right">
-    <div class="stackedit__html">
-      <h1 id="javagrinders_arc-with-opencv-3.2.0-and-openjdk11-----installation-support-instructions">JavaGrinders_ARC with OpenCV 3.2.0 and OpenJDK11 — installation support instructions</h1>
-<p>(Updated 10/25/2020 by <a href="mailto:jpark@scripps.edu">Scarlet Park</a>)</p>
-<dl>
-<dt>Versions used in this instruction support:</dt>
-<dd>Mac OS X Catalina</dd>
-<dd>Java (OpenJDK 11)</dd>
-<dd>JavaGrinders Library version 56</dd>
-<dd>OpenCV 3.2.0</dd>
-<dd>Eclipse Photon</dd>
-</dl>
-<h2 id="useful-keyboard-shortcuts-and-commands">Useful keyboard shortcuts and commands</h2>
+## Useful keyboard shortcuts and commands
+|      Function							 	|	Shortcut / command |
+|-------------------------------------------|----------------------| 
+|**Go to folder (in Finder)**				| *Command+Shift+G*
+|**Show hidden files and folders in Finder**| *Command+Shift+.*
+|**Change directory in Terminal**			| `cd`
+|**Execute a command in Terminal with superuser privilege**| type `sudo` (<u>su</u>peruser <u>do</u>) before the command you want to execute. (If Terminal output says "access denied" or "permission denied")|
 
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Shortcut / command</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Go to folder (in Finder)</strong></td>
-<td><em>Command+Shift+G</em></td>
-</tr>
-<tr>
-<td><strong>Show hidden files and folders in Finder</strong></td>
-<td><em>Command+Shift+.</em></td>
-</tr>
-<tr>
-<td><strong>Change directory in Terminal</strong></td>
-<td><code>cd</code></td>
-</tr>
-<tr>
-<td><strong>Execute a command in Terminal with superuser privilege</strong></td>
-<td>type <code>sudo</code> (<u>su</u>peruser <u>do</u>) before the command you want to execute. (If Terminal output says “access denied” or “permission denied”)</td>
-</tr>
-</tbody>
-</table><h2 id="install-necessary-tools-packages-and-dependencies">Install necessary tools, packages, and dependencies</h2>
-<h3 id="xcode">Xcode</h3>
-<p><a href="https://developer.apple.com/xcode/">Xcode</a> is a package provided by Apple containing compilers, libraries and additional tools required to develop applications for macOS.</p>
-<p>Install Xcode following the instructions <a href="https://guide.macports.org/#installing.xcode">here</a>.</p>
-<h3 id="homebrew">Homebrew</h3>
-<p>Install Homebrew, a useful package manager for macOS, by entering the following command in Terminal:</p>
-<pre class=" language-bash"><code class="prism  language-bash">/bin/bash -c <span class="token string">"<span class="token variable"><span class="token variable">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh<span class="token variable">)</span></span>"</span>
-</code></pre>
-<p>(Note: most up-to-date installation instructions can be found on the <a href="%22https://brew.sh/%22">Homebrew official website</a>.)</p>
-<p>Once Homebrew is installed, install <code>pkg-config</code> as follows (in Terminal):</p>
-<pre class=" language-bash"><code class="prism  language-bash">brew <span class="token function">install</span> pkg-config
-</code></pre>
-<blockquote>
-<p><a href="https://formulae.brew.sh/formula/pkg-config"><code>pkg-config</code></a> helps you keep track of installed packages</p>
-</blockquote>
-<hr>
-<h3 id="openjdk11">OpenJDK11</h3>
-<p>For OpenCV 3.2.0 and JavaGrinders version 56, we recommend Java 11, which is nicely backwards compatible, or Java 1.8. In this example, we’ll use Java 11 from OpenJDK.</p>
-<p>To check whether you have Java installed, open Terminal and execute command:</p>
-<pre class=" language-bash"><code class="prism  language-bash">java -version
+## Install necessary tools, packages, and dependencies
+
+### Xcode
+[Xcode](https://developer.apple.com/xcode/) is a package provided by Apple containing compilers, libraries and additional tools required to develop applications for macOS.
+
+Install Xcode following the instructions [here](https://guide.macports.org/#installing.xcode).
+
+### Homebrew
+
+Install Homebrew, a useful package manager for macOS, by entering the following command in Terminal:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+  (Note: most up-to-date installation instructions can be found on the [Homebrew official website]("https://brew.sh/").)
+
+Once Homebrew is installed, install `pkg-config` as follows (in Terminal):
+```bash
+brew install pkg-config
+```
+> [`pkg-config`](https://formulae.brew.sh/formula/pkg-config) helps you keep track of installed packages
+
+
+---
+### OpenJDK11
+For OpenCV 3.2.0 and JavaGrinders version 56, we recommend Java 11, which is nicely backwards compatible, or Java 1.8. In this example, we'll use Java 11 from OpenJDK.
+
+To check whether you have Java installed, open Terminal and execute command:
+```bash
+java -version
 javac -version
-</code></pre>
-<p><em><u>If the reported version of Java is higher than 11:</u></em><br>
-Navigate to /Library/Java/JavaVirtualMachines/ and delete the jdk folder to uninstall that version of Java.</p>
-<p>Download and extract<code>openjdk-11_osx-x64_bin.tar</code> from <a href="https://drive.google.com/file/d/12v5Qyl6vZnNQIIITkw7BYnJ7uZJTuIiv/view?usp=sharing">here</a> or the <a href="https://jdk.java.net/archive/">official website</a>.<br>
-Move the extracted <code>openjdk-11</code> folder to <code>/Library/Java/JavaVirtualMachines/</code></p>
-<p>Open Terminal and execute the command:</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">sudo</span> java -version
-<span class="token function">sudo</span> javac -version
-</code></pre>
-<blockquote>
-<p>Your security setting may block Terminal from correctly accessing Java. A pop-up window will give you only two choices—move the downloaded file to Trash or cancel operation. In such case, go to your System Settings &gt; Security. There, you can unblock access to the file. Now if you return to Terminal and execute <code>sudo java -version</code> again, the pop-up window will have 3 options: Open, Move to Trash, or Cancel. Click Open.</p>
-</blockquote>
-<p>If the output reports Java 11 and Open JDK 11, you’re good to go.<br>
-Execute the following command to add the <code>JAVA_HOME</code> path to <code>~/.profile</code>.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> <span class="token string">'export JAVA_HOME=$(/usr/libexec/java_home -v11'</span><span class="token operator">&gt;&gt;</span>~/.profile
-<span class="token function">source</span> ~/.profile
-</code></pre>
-<hr>
-<h3 id="if-trying-to-reinstall-opencv-use-the-following-steps-to-check-for-and-uninstall-previous-builds--installations-of-opencv-before-proceeding">If trying to reinstall OpenCV, use the following steps to check for and uninstall previous builds / installations of OpenCV before proceeding</h3>
-<p>Check whether OpenCV is installed with</p>
-<pre class=" language-bash"><code class="prism  language-bash">pkg-config --modversion opencv
-</code></pre>
-<h4 id="if-youre-extremely-lucky-and-you-know--remember-how-you-built-or-installed-opencv"><em>If you’re extremely lucky and you know / remember how you built or installed OpenCV:</em></h4>
+```
+*<u>If the reported version of Java is higher than 11:</u>*
+Navigate to /Library/Java/JavaVirtualMachines/ and delete the jdk folder to uninstall that version of Java.
 
-<table>
-<thead>
-<tr>
-<th>Installation method</th>
-<th>How to uninstall</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Homebrew</td>
-<td><code>brew uninstall opencv</code> <br> (if <code>brew info opencv</code> shows that opencv is installed)</td>
-</tr>
-<tr>
-<td>MacPorts</td>
-<td><code>sudo port uninstall opencv</code></td>
-</tr>
-<tr>
-<td>CMake</td>
-<td>If you have a <code>cmake</code> build folder you (or someone else) used to install OpenCV (and can find the said directory), navigate to that directory and execute in Terminal: <code>$ make uninstall</code></td>
-</tr>
-</tbody>
-</table><h4 id="if-youre-unlucky-like-i-am-and-dont-know-how-opencv-was-installed">If you’re unlucky like I am and don’t know how OpenCV was installed:</h4>
-<p>To manually remove files associated with OpenCV,</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">sudo</span> <span class="token function">rm</span> -rf /opt/local/lib/libopencv*
-<span class="token function">rm</span> -rf /usr/local/include/opencv*
-</code></pre>
-<p>And you can further manually check and decide to keep or remove OpenCV-related files with the following command:</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">sudo</span> <span class="token function">find</span> / -name <span class="token string">"opencv"</span> -exec <span class="token function">rm</span> -i <span class="token punctuation">{</span><span class="token punctuation">}</span> \<span class="token punctuation">;</span>
-</code></pre>
-<p>Verify that OpenCV is uninstalled with:</p>
-<pre class=" language-bash"><code class="prism  language-bash">pkg-config --modversion opencv
-</code></pre>
-<h4 id="optional-but-recommended-uninstall-all-packages-for-a-clean-install-of-opencv-and-javagrinders-arc"><em>(Optional, but recommended) Uninstall all packages for a clean install of OpenCV and JavaGrinders ARC</em></h4>
-<p>If you’re trying to set up JavaGrinders for ARC on a Mac that’s not used for anything else, I recommend uninstalling all packages installed with package managers such as brew or MacPorts.</p>
-<p>For <strong>Homebrew</strong> installed packages:</p>
-<pre class=" language-bash"><code class="prism  language-bash">brew list 		<span class="token comment"># This will return all formulae installed with brew</span>
-brew remove --force <span class="token variable"><span class="token variable">$(</span>brew list<span class="token variable">)</span></span> --ignore-dependencies
-brew cask remove --force <span class="token variable"><span class="token variable">$(</span>brew list --cask<span class="token variable">)</span></span>
+Download and extract`openjdk-11_osx-x64_bin.tar` from [here](https://drive.google.com/file/d/12v5Qyl6vZnNQIIITkw7BYnJ7uZJTuIiv/view?usp=sharing) or the [official website](https://jdk.java.net/archive/).
+Move the extracted `openjdk-11` folder to `/Library/Java/JavaVirtualMachines/`
+
+Open Terminal and execute the command:
+```bash
+sudo java -version
+sudo javac -version
+```
+   > Your security setting may block Terminal from correctly accessing Java. A pop-up window will give you only two choices---move the downloaded file to Trash or cancel operation. In such case, go to your System Settings > Security. There, you can unblock access to the file. Now if you return to Terminal and execute `sudo java -version` again, the pop-up window will have 3 options: Open, Move to Trash, or Cancel. Click Open.
+
+If the output reports Java 11 and Open JDK 11, you're good to go.
+Execute the following command to add the `JAVA_HOME` path to `~/.profile`.
+```bash
+echo 'export JAVA_HOME=$(/usr/libexec/java_home -v11'>>~/.profile
+source ~/.profile
+```
+----
+### If trying to reinstall OpenCV, use the following steps to check for and uninstall previous builds / installations of OpenCV before proceeding
+
+Check whether OpenCV is installed with
+```bash
+pkg-config --modversion opencv
+```
+#### *If you're extremely lucky and you know / remember how you built or installed OpenCV:*
+|  Installation method 	| How to uninstall |
+|-----------------------|-------------------------|
+| Homebrew			   	| `brew uninstall opencv` <br> (if `brew info opencv` shows that opencv is installed) |
+| MacPorts				| `sudo port uninstall opencv` |
+| CMake					| If you have a `cmake` build folder you (or someone else) used to install OpenCV (and can find the said directory), navigate to that directory and execute in Terminal: `$ make uninstall` |
+
+#### If you're unlucky like I am and don't know how OpenCV was installed:
+To manually remove files associated with OpenCV,
+```bash
+sudo rm -rf /opt/local/lib/libopencv*
+rm -rf /usr/local/include/opencv*
+```
+And you can further manually check and decide to keep or remove OpenCV-related files with the following command:
+```bash
+sudo find / -name "opencv" -exec rm -i {} \;
+```
+Verify that OpenCV is uninstalled with:
+```bash
+pkg-config --modversion opencv
+```
+
+#### *(Optional, but recommended) Uninstall all packages for a clean install of OpenCV and JavaGrinders ARC*
+If you're trying to set up JavaGrinders for ARC on a Mac that's not used for anything else, I recommend uninstalling all packages installed with package managers such as brew or MacPorts.
+
+For **Homebrew** installed packages:
+```bash
+brew list 		# This will return all formulae installed with brew
+brew remove --force $(brew list) --ignore-dependencies
+brew cask remove --force $(brew list --cask)
 brew cleanup
-brew list 		<span class="token comment"># Confirm that everything is deleted</span>
-</code></pre>
-<p>If you decide to uninstall all Homebrew installed packages, <em>re-install <code>pkg-config</code> before proceeding to the next step</em>.</p>
-<pre class=" language-bash"><code class="prism  language-bash">brew <span class="token function">install</span> pkg-config
-``<span class="token variable"><span class="token variable">`</span><span class="token function">bash</span>
+brew list 		# Confirm that everything is deleted
+```
+If you decide to uninstall all Homebrew installed packages, *re-install `pkg-config` before proceeding to the next step*.
+```bash
+brew install pkg-config
+```bash
 For **MacPorts** installed packages:
-<span class="token variable">`</span></span>``bash
-<span class="token function">sudo</span> port selfupdate
-<span class="token function">sudo</span> port -fp uninstall installed
-<span class="token function">sudo</span> port -d selfupdate
-</code></pre>
-<blockquote>
-<p>Sometimes, for some reason, you (or one of your co-workers) may have installed some packages with MacPorts but your bash may say port: command not found. In that case, simply install a new version of MacPorts (download binary from <a href="https://drive.google.com/file/d/1tB2OiZlVLn2_JyHm9fnQVSclAzd1Fo_o/view?usp=sharing">here</a> or the <a href="https://www.macports.org/install.php">official website</a>. You need to have installed Xcode already.) and then execute the commands above.</p>
-</blockquote>
-<hr>
-<h3 id="installing-necessary-packages-and-opencv-dependencies-with-homebrew">Installing necessary packages and OpenCV dependencies with Homebrew</h3>
-<p>Install <code>wget</code>:</p>
-<pre class=" language-bash"><code class="prism  language-bash">brew <span class="token function">install</span> <span class="token function">wget</span>
-</code></pre>
-<p>We also need to install <code>ant</code>. In Homebrew, <code>ant</code> requires <code>openjdk</code> formula as a dependency, which currently (Oct 25, 2020) defaults to jdk-14. This version of jdk will not be compatible with our OpenCV and JavaGrinders libraries. So a workaround is to install <code>ant</code> with the <code>openjdk</code> dependency and then uninstall the <code>openjdk</code>.</p>
-<pre class=" language-bash"><code class="prism  language-bash">brew <span class="token function">install</span> ant <span class="token operator">&amp;&amp;</span> brew uninstall --ignore-dependencies openjdk
-</code></pre>
-<p>Test whether <code>ant</code> is installed:</p>
-<pre class=" language-bash"><code class="prism  language-bash">ant -v
-</code></pre>
-<p>Now, we have to add <code>$ANT_HOME</code> path to <code>~/.profile</code>.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> <span class="token string">'export ANT_HOME=(/usr/local/Cellar/ant/1.10.9/libexec/)'</span><span class="token operator">&gt;&gt;</span>~/.profile
-<span class="token function">source</span> ~/.profile
-</code></pre>
-<h3 id="check-.profile-and-update-.bash_profile">Check <code>.profile</code> and update <code>.bash_profile</code></h3>
-<p>At this point, we’ve installed a lot of things and added a couple of lines to our <code>.profile</code> file, we should check to make sure we have everything we need in there.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">nano</span> ~/.profile
-</code></pre>
-<p>This should look something like this:</p>
-<pre><code># JAVA_HOME path
+```bash
+sudo port selfupdate
+sudo port -fp uninstall installed
+sudo port -d selfupdate
+```
+> Sometimes, for some reason, you (or one of your co-workers) may have installed some packages with MacPorts but your bash may say port: command not found. In that case, simply install a new version of MacPorts (download binary from [here](https://drive.google.com/file/d/1tB2OiZlVLn2_JyHm9fnQVSclAzd1Fo_o/view?usp=sharing) or the [official website](https://www.macports.org/install.php). You need to have installed Xcode already.) and then execute the commands above.
+
+---
+### Installing necessary packages and OpenCV dependencies with Homebrew
+Install `wget`:
+```bash
+brew install wget
+```
+We also need to install `ant`. In Homebrew, `ant` requires `openjdk` formula as a dependency, which currently (Oct 25, 2020) defaults to jdk-14. This version of jdk will not be compatible with our OpenCV and JavaGrinders libraries. So a workaround is to install `ant` with the `openjdk` dependency and then uninstall the `openjdk`.
+```bash
+brew install ant && brew uninstall --ignore-dependencies openjdk
+```
+Test whether `ant` is installed:
+```bash
+ant -v
+```
+Now, we have to add `$ANT_HOME` path to `~/.profile`.
+
+```bash
+echo 'export ANT_HOME=(/usr/local/Cellar/ant/1.10.9/libexec/)'>>~/.profile
+source ~/.profile
+```
+### Check `.profile` and update `.bash_profile`
+At this point, we've installed a lot of things and added a couple of lines to our `.profile` file, we should check to make sure we have everything we need in there.
+```bash
+nano ~/.profile
+```
+This should look something like this:    
+```
+# JAVA_HOME path
 export JAVA_HOME=$(/usr/libexec/java_home -v11)
 
 # ANT_HOME path    
 export ANT_HOME=$(/usr/local/Cellar/ant/1.10.9/libexec/)
-</code></pre>
-<blockquote>
-<p>There could be some additional lines there (for example, if you installed MacPorts, there will be a MacPorts PATH environmental variable there as well. But for now, what’s important is that the <code>JAVA_HOME</code> and <code>ANT_HOME</code> are in there.</p>
-</blockquote>
-<p>Press <em>Control+c</em> to exit <code>nano</code> (and save changes if you made any).<br>
-Now, let’s reload the <code>.profile</code> and make sure <code>JAVA_HOME</code> and <code>ANT_HOME</code> work.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">source</span> ~/.profile
-<span class="token keyword">echo</span> <span class="token variable">$JAVA_HOME</span>
-<span class="token keyword">echo</span> <span class="token variable">$ANT_HOME</span>
-</code></pre>
-<p>Once you’ve verified that the <code>JAVA_HOME</code> and <code>ANT_HOME</code> paths are correctly set, we need to make sure that <code>.bash_profile</code> will pull up <code>.profile</code> when the Terminal shell starts. (<a href="https://unix.stackexchange.com/questions/45684/what-is-the-difference-between-profile-and-bash-profile">StackExchange: What is the difference between ~/.profile and ~/.bash_profile?</a>)</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">nano</span> ~/.bash_profile
-</code></pre>
-<p>Insert the line</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">.</span> ~/.profile
-</code></pre>
-<p>at the beginning of the <code>/.bash_profile</code>. So it should look like:</p>
-<pre><code>. ~/.profile
+```
+  > There could be some additional lines there (for example, if you installed MacPorts, there will be a MacPorts PATH environmental variable there as well. But for now, what's important is that the `JAVA_HOME` and `ANT_HOME` are in there.
+
+Press *Control+c* to exit `nano` (and save changes if you made any).
+Now, let's reload the `.profile` and make sure `JAVA_HOME` and `ANT_HOME` work.
+```bash
+source ~/.profile
+echo $JAVA_HOME
+echo $ANT_HOME
+```
+Once you've verified that the `JAVA_HOME` and `ANT_HOME` paths are correctly set, we need to make sure that `.bash_profile` will pull up `.profile` when the Terminal shell starts. ([StackExchange: What is the difference between ~/.profile and ~/.bash_profile?](https://unix.stackexchange.com/questions/45684/what-is-the-difference-between-profile-and-bash-profile))
+```bash
+nano ~/.bash_profile
+```
+Insert the line
+```bash
+. ~/.profile
+```
+at the beginning of the `/.bash_profile`. So it should look like:
+```
+. ~/.profile
 export PATH=/usr/local/bin:$PATH
-</code></pre>
-<p>Save and exit.</p>
-<p>We’re almost there!</p>
-<hr>
-<h3 id="install-cmake-gui">Install CMake GUI</h3>
-<p>OpenCV 3.2.0 is the version we want for the JavaGrinders_ARC. (OpenCV 3.3.x had USB unidentifiable serial connection issues and OpenCV 4.x require newer Java &amp; JavaGrinders library—in development.) But with Homebrew and MacPorts, OpenCV installation defaults to either 3.4.x or 4.x. So it’s best to build OpenCV 3.2.0 from source.</p>
-<p>To do so, we need CMake (and the GUI, optional but recommended).</p>
-<p>Download and install CMake GUI with a binary from <a href="https://drive.google.com/file/d/1Q53nhU_l59t3GiQuVtBdLQ-O6JhwDmcF/view?usp=sharing">here</a> or from the <a href="https://cmake.org/download/">official website</a>.</p>
-<hr>
-<p><br><br></p>
-<h2 id="installing-opencv-3.2.0">Installing OpenCV 3.2.0</h2>
-<p>Now we can proceed with installing OpenCV!</p>
-<p>A lot of online instructions will recommend building OpenCV with package managers such as Homebrew of MacPorts. However, the package managers install OpenCV 4.x by default or even when you specify OpenCV3, it’ll install OpenCV 3.4 (at least right now in October 2020 it does).</p>
-<p>So we want to build OpenCV 3.2.0 from source.</p>
-<p>First, download OpenCV 3.2.0 source code from <a href="https://drive.google.com/file/d/1617qaP2ayDKBnS5S4nogD_yHoU5QaAsb/view?usp=sharing">here</a> or from <a href="https://github.com/opencv/opencv/releases/tag/3.2.0">OpenCV GitHub release</a> and extract the archive somewhere.<br>
-In this instruction, I’m going to assume you extracted the archive in your <strong>Documents</strong> folder. So there should be a opencv-3.2.0 folder in your Documents.</p>
-<p>Navigate to <u>/Documents/opencv-3.2.0/</u> in Finder, and inside, create a new folder and name it <strong>build</strong>.<br>
-Now the folder tree should look something like:</p>
-<pre><code>Documents
+```
+Save and exit.
+
+We're almost there!
+
+---
+### Install CMake GUI
+OpenCV 3.2.0 is the version we want for the JavaGrinders_ARC. (OpenCV 3.3.x had USB unidentifiable serial connection issues and OpenCV 4.x require newer Java & JavaGrinders library---in development.) But with Homebrew and MacPorts, OpenCV installation defaults to either 3.4.x or 4.x. So it's best to build OpenCV 3.2.0 from source.
+
+To do so, we need CMake (and the GUI, optional but recommended).
+
+Download and install CMake GUI with a binary from [here](https://drive.google.com/file/d/1Q53nhU_l59t3GiQuVtBdLQ-O6JhwDmcF/view?usp=sharing) or from the [official website](https://cmake.org/download/).
+
+___
+<br><br>
+
+## Installing OpenCV 3.2.0
+Now we can proceed with installing OpenCV!
+
+A lot of online instructions will recommend building OpenCV with package managers such as Homebrew of MacPorts. However, the package managers install OpenCV 4.x by default or even when you specify OpenCV3, it'll install OpenCV 3.4 (at least right now in October 2020 it does).
+
+So we want to build OpenCV 3.2.0 from source.
+
+First, download OpenCV 3.2.0 source code from [here](https://drive.google.com/file/d/1617qaP2ayDKBnS5S4nogD_yHoU5QaAsb/view?usp=sharing) or from [OpenCV GitHub release](https://github.com/opencv/opencv/releases/tag/3.2.0) and extract the archive somewhere. 
+In this instruction, I'm going to assume you extracted the archive in your **Documents** folder. So there should be a opencv-3.2.0 folder in your Documents.
+
+Navigate to <u>/Documents/opencv-3.2.0/</u> in Finder, and inside, create a new folder and name it **build**. 
+Now the folder tree should look something like:
+
+```
+Documents
 |	...
 |
 └───opencv-3.2.0
@@ -244,127 +222,164 @@ Now the folder tree should look something like:</p>
 	└───include
 	└───modules
 	└───samples
-</code></pre>
-<p>Great, now we can start building OpenCV 3.2.0.</p>
-<p>If you want to use the configuration that I used, download <strong>CMakeCache.txt</strong> from <a href="https://docs.google.com/document/d/12XPXmZAUnJWrFU9B7U27_SNFc0fH1xkU7a0hljrV4r0/edit?usp=sharing">here</a> and place it in the <code>build</code> folder.</p>
-<p>Alternatively, you can go through the different options and specify your own configuration.</p>
-<blockquote>
-<p>(You’ll have to do this if you aren’t exactly following the instructions I’ve outlined. For example, Java version, where you extracted the opencv-3.2.0 folder …)</p>
-</blockquote>
+```
+
+Great, now we can start building OpenCV 3.2.0.
+
+If you want to use the configuration that I used, download **CMakeCache.txt** from [here](https://docs.google.com/document/d/12XPXmZAUnJWrFU9B7U27_SNFc0fH1xkU7a0hljrV4r0/edit?usp=sharing) and place it in the `build` folder.
+
+Alternatively, you can go through the different options and specify your own configuration. 
+>(You'll have to do this if you aren't exactly following the instructions I've outlined. For example, Java version, where you extracted the opencv-3.2.0 folder ...)
+
 <br>
-<p>In <strong>Terminal</strong>, navigate to <code>/Documents/opencv-3.2.0/build</code>.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cd</span> /Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0/build
-</code></pre>
-<p>Make sure you replace <code>YOUR_USERNAME_GOES_HERE</code> in the command above with your username! In my case, my username on Mac is jalab. So my command would be <code>cd /Users/jalab/Documents/opencv-3.2.0/build</code>.</p>
-<p>Now, launch the CMake GUI from Applications.<br>
-The icon will look like:<br>
-<img src="https://cmake.org/wp-content/uploads/2018/11/cmake_logo_slider.png" alt="CMake icon"></p>
-<p>Next to <strong>Where is the source code:</strong>, enter<br>
-<code>/Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0</code>.<br>
-Next to <strong>Where to build the binaries:</strong>, enter<br>
-<code>/Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0/build</code>.</p>
-<p>Now, click the <strong>Configure</strong> button. If you downloaded the CMakeCache.txt and placed it in the build folder, the fields should auto-fill. If there are any red lines after you’ve clicked Configure two times, check those settings and fill them in appropriately.</p>
-<p>Now, you can click the <strong>Generate</strong> button, and wait for the build to finish.<br>
-Go back to <strong>Terminal</strong>, and type the following command:</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">make</span> <span class="token function">install</span>
-</code></pre>
-<p>This will install OpenCV 3.2.0 in <code>/usr/local/share/OpenCV</code>.<br>
-<br></p>
-<p>Now, you can verify that OpenCV 3.2.0 was installed using the following command:</p>
-<pre class=" language-bash"><code class="prism  language-bash">pkg-config --modversion opencv
-</code></pre>
-<p>which should report</p>
-<pre class=" language-bash"><code class="prism  language-bash">3.2.0
-</code></pre>
-<p>You can also manually check that the <code>opencv320.jar</code> and <code>opencv320.dylib</code> files are present by navigating to <strong>/usr/local/share/OpenCV/java</strong> from Finder. (Remember the “Go to …” command? <em>Command+Shift+G</em>)</p>
-<h2 id="install-eclipse-ide-for-java-developers">Install Eclipse IDE for Java Developers</h2>
-<h3 id="download-and-install-eclipse">Download and install Eclipse</h3>
-<p>We recommend using Eclipse <strong>Photon</strong>, as previous versions don’t support Java 11 well. Download Eclipse Photon for Java Developers <a href="https://drive.google.com/file/d/1fyBQNxGmIP41LYKGckik5SYmClzqkvgw/view?usp=sharing">here</a> or from the official Eclipse website (<a href="https://www.eclipse.org/downloads/packages/release/photon/r/eclipse-ide-java-developers">release page</a> or <a href="https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/photon/R/eclipse-java-photon-R-macosx-cocoa-x86_64.dmg">direct download link</a>).</p>
-<p>Follow the on-screen instructions to install Eclipse.</p>
-<h3 id="setting-up-eclipse">Setting up Eclipse</h3>
-<p>When you first start Eclipse, it will ask you to set a workspace directory. A workspace is just a directory that Eclipse will use to place new projects in.<br>
-Doesn’t matter where you put it. It could be in your Documents, it could be in your Home (/Users/<em>YOUR_USERNAME</em>). The suggested location is fine.<br>
-Click the <strong>Use this as the default and do not ask again</strong> checkbox, and then click OK.</p>
-<h4 id="check-default-java-build-path-and-compiler">Check default Java build path and compiler:</h4>
-<p>Follow the instructions <a href="https://www.concretepage.com/ide/eclipse/how-to-change-eclipse-java-version-for-compiler-and-jre">here</a> to verify/change Java version for compiler and JRE in Eclipse.</p>
-<blockquote>
-<p>The demo uses Java 1.8, but you want to activate Java 11!</p>
-</blockquote>
-<h4 id="disabling-polling-news-feed">Disabling Polling News Feed:</h4>
-<p>Does a “Polling News Feed” error keep popping up?<br>
-You can go to Eclipse &gt; Preferences, and in the “type filter text” box, type <strong>News</strong>. Un-check the <em>Enable automatic news polling option</em>. (<a href="https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1198//eclipse.html#:~:text=Finally%2C%20we%20need%20to%20disable,Enable%20automatic%20news%20polling%20option%22.">source</a>)</p>
-<h2 id="import-javagrinders_arc-and-opencvtest">Import JavaGrinders_ARC and OpenCVTest</h2>
-<p>Last step! We’re going to import two projects: JavaGrinders_ARC and OpenCV.</p>
-<h3 id="download-project-folders">Download project folders</h3>
-<dl>
-<dt>JavaGrinders_ARC</dt>
-<dd>This contains the JavaGrinders library file <code>JavaGrinders.jar</code> and the class files used to run the automated animal &amp; food tracking.</dd>
-<dd><a href="https://drive.google.com/drive/folders/1nzrDxsqhuAkREa7OvQn64D3hXJSprGgV?usp=sharing">Download link for JavaGrinders_ARC</a><br>
-<br></dd>
-<dt>OpenCVTest</dt>
-<dd>OpenCVTest contains few classes for testing whether OpenCV can detect cameras that are connected to your computer.</dd>
-<dd>You can use this to help troubleshoot where the problems is if you’re having trouble with JavaGrinders_ARC.</dd>
-<dd><a href="https://drive.google.com/drive/folders/1RXTNZlSu59gfDR2x52tb-iwLqSM1tsYm?usp=sharing">Download link for OpenCVTest</a></dd>
-</dl>
-<p>Move the <strong>OpenCVTest</strong> and <strong>JavaGrinders_ARC</strong> folders into your Eclipse workspace, so the folder tree might look like this:</p>
-<pre><code>Workspace
+
+In **Terminal**, navigate to `/Documents/opencv-3.2.0/build`.
+```bash
+cd /Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0/build
+```
+Make sure you replace `YOUR_USERNAME_GOES_HERE` in the command above with your username! In my case, my username on Mac is jalab. So my command would be `cd /Users/jalab/Documents/opencv-3.2.0/build`.
+
+Now, launch the CMake GUI from Applications. 
+The icon will look like: 
+![CMake icon](https://cmake.org/wp-content/uploads/2018/11/cmake_logo_slider.png)
+
+Next to **Where is the source code:**, enter 
+`/Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0`.
+Next to **Where to build the binaries:**, enter 
+`/Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0/build`.
+
+Now, click the **Configure** button. If you downloaded the CMakeCache.txt and placed it in the build folder, the fields should auto-fill. If there are any red lines after you've clicked Configure two times, check those settings and fill them in appropriately.
+
+Now, you can click the **Generate** button, and wait for the build to finish.
+Go back to **Terminal**, and type the following command:
+```bash
+make install
+```
+This will install OpenCV 3.2.0 in `/usr/local/share/OpenCV`.
+<br>
+
+Now, you can verify that OpenCV 3.2.0 was installed using the following command:
+```bash
+pkg-config --modversion opencv
+```
+which should report
+```bash 
+3.2.0
+```
+
+You can also manually check that the `opencv320.jar` and `opencv320.dylib` files are present by navigating to **/usr/local/share/OpenCV/java** from Finder. (Remember the "Go to ..." command? *Command+Shift+G*)
+
+## Install Eclipse IDE for Java Developers
+
+### Download and install Eclipse
+
+We recommend using Eclipse **Photon**, as previous versions don't support Java 11 well. Download Eclipse Photon for Java Developers [here](https://drive.google.com/file/d/1fyBQNxGmIP41LYKGckik5SYmClzqkvgw/view?usp=sharing) or from the official Eclipse website ([release page](https://www.eclipse.org/downloads/packages/release/photon/r/eclipse-ide-java-developers) or [direct download link](https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/photon/R/eclipse-java-photon-R-macosx-cocoa-x86_64.dmg)).
+
+Follow the on-screen instructions to install Eclipse.
+
+### Setting up Eclipse
+When you first start Eclipse, it will ask you to set a workspace directory. A workspace is just a directory that Eclipse will use to place new projects in.
+Doesn't matter where you put it. It could be in your Documents, it could be in your Home (/Users/*YOUR_USERNAME*). The suggested location is fine. 
+Click the **Use this as the default and do not ask again** checkbox, and then click OK.
+
+#### Check default Java build path and compiler:
+Follow the instructions [here](https://www.concretepage.com/ide/eclipse/how-to-change-eclipse-java-version-for-compiler-and-jre) to verify/change Java version for compiler and JRE in Eclipse. 
+> The demo uses Java 1.8, but you want to activate Java 11!
+
+#### Disabling Polling News Feed:
+Does a "Polling News Feed" error keep popping up? 
+You can go to Eclipse > Preferences, and in the "type filter text" box, type **News**. Un-check the *Enable automatic news polling option*. ([source](https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1198//eclipse.html#:~:text=Finally%2C%20we%20need%20to%20disable,Enable%20automatic%20news%20polling%20option%22.))
+
+
+## Import JavaGrinders_ARC and OpenCVTest
+
+Last step! We're going to import two projects: JavaGrinders_ARC and OpenCV. 
+
+### Download project folders
+
+JavaGrinders_ARC
+: This contains the JavaGrinders library file `JavaGrinders.jar` and the class files used to run the automated animal & food tracking.
+: [Download link for JavaGrinders_ARC](https://drive.google.com/drive/folders/1nzrDxsqhuAkREa7OvQn64D3hXJSprGgV?usp=sharing)
+<br>
+
+OpenCVTest
+: OpenCVTest contains few classes for testing whether OpenCV can detect cameras that are connected to your computer. 
+: You can use this to help troubleshoot where the problems is if you're having trouble with JavaGrinders_ARC.
+: [Download link for OpenCVTest](https://drive.google.com/drive/folders/1RXTNZlSu59gfDR2x52tb-iwLqSM1tsYm?usp=sharing)
+
+Move the **OpenCVTest** and **JavaGrinders_ARC** folders into your Eclipse workspace, so the folder tree might look like this:
+```
+Workspace
 └───OpenCVTest
 └───JavaGrinders_ARC
-</code></pre>
-<h3 id="loading-javagrinders_arc">Loading JavaGrinders_ARC</h3>
-<p>In Eclipse, create new Java Project<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1cifaq36X2Xr_zBABQ_uhhNyMb1q9zged" alt=""></p>
-<p>Enter “JavaGrinders_ARC” in the Project name and the rest should auto fill. Then click next.<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1jRd_80CaG4YvDj8H3SOtva_14QGGvnp9" alt=""></p>
-<blockquote>
-<p>The image shows “OpenCVTest” in Project name. <em>Replace that with <strong>"JavaGrinders_ARC"</strong></em>.<br>
-Your default JRE should say JDK 11. I was using Java 1.8 when I took this screenshot.</p>
-</blockquote>
-<p>On the next screen, <strong>uncheck the box for <em>Create module-info.java file</em></strong>.<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=19hDFQeVTm3LLJ9L7QfbS-onbXtioEchX" alt=""></p>
-<p>Click “Finish”, and you’re good to go!</p>
-<h3 id="start-er-up">START 'ER UP!</h3>
-<p>In the <strong>Package Explorer</strong> window, navigate to <strong>JavaGrinders_ARC</strong> &gt; <strong>src</strong> &gt; <strong>_ARC</strong>. Double click on <strong>ARCController.java</strong> to open the class file.</p>
-<p>Click the green “play” button in the tool bar to start the tracking software! <img src="https://drive.google.com/uc?export=view&amp;id=11kvYr6ONwblv2cENMPE8AlwLkxtMGKbM" alt="RUN"></p>
-<h3 id="troubleshooting-with-opencvtest">Troubleshooting with OpenCVTest</h3>
-<p>Does ARCController.java not work? Then we can at least see if it’s the OpenCV library that’s flawed using the class files in OpenCVTest.</p>
-<p>In Eclipse, create new Java Project<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1cifaq36X2Xr_zBABQ_uhhNyMb1q9zged" alt=""></p>
-<p>Enter “OpenCVTest” in the Project name and the rest should auto fill. Then click next.<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1jRd_80CaG4YvDj8H3SOtva_14QGGvnp9" alt=""></p>
-<blockquote>
-<p>Your default JRE will probably say JDK 11. I was just using Java 1.8 when I took this screenshot.</p>
-</blockquote>
-<p>On the next screen,<br>
-First, <strong>uncheck the box for <em>Create module-info.java file</em></strong>.<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=19hDFQeVTm3LLJ9L7QfbS-onbXtioEchX" alt=""></p>
-<p>Then, under “Libraries”, click “Add Library…”<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1gCoCs_jD0-pNJwHFXDNpNQ45vGV-dVLw" alt=""><br>
-Select “User Library” and click “Next”<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1TS_20-V6jH7v5WlwkfwrU7FHsY76LThv" alt=""></p>
-<p>Click on “User Libraries…”, then “New…”, and enter “OpenCV” in the User library name and click “OK”.<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1EjKM2np0_lpAN1C-m3TyHdBdsXGIMLRP" alt=""></p>
-<p>Now with the “OpenCV” selected, click on “Add External JARS…”<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=14QKD7yNgCH3mCaju1O5smsLIW_ysGdma" alt=""></p>
-<p>Now you need to navigate to where your OpenCV JAR is. It’s probably in <code>/opt/local/share/OpenCV/java</code>. Enter your path and click Go.<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1iWJdexXXHCMWoUheN5EtEucXDgAvmZom" alt=""></p>
-<p>Select the opencv-320.jar file and click Open.<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=12f13_75R9iHl7wR86sgzCs84epi6PCIZ" alt=""></p>
-<p>Now, select “Native library location: (None)” and click Edit<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1vhV3uY2m7QQ_aO1YOhwqBJFD2B4jRGup" alt=""></p>
-<p>Click “External Folder…”, click “Open”, and then “OK”<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=16QOZCl8cYpEovhLQ0aIkzSehYyzL0O5O" alt=""></p>
-<p>Click “OK”<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1PkMnABbuppcB-uWlOv_COTrlixEtOixL" alt=""></p>
-<p>Click “Finish”<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1WUkW2ZKYTIe357fGRLc6HNTuFcncS_4Y" alt=""></p>
-<p>Click “Finish”<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1OLm8fNmhRyDNfjeXS0OS4oUWAj5Wa6NY" alt=""></p>
-<p>Navigate to <strong>Count.java</strong> and run it to see if OpenCV can access any camera<br>
-<img src="https://drive.google.com/uc?export=view&amp;id=1xA5bVdRLeKyKao4xtumpdzaUVesAdsmf" alt=""></p>
+```
 
-    </div>
-  </div>
-</body>
+### Loading JavaGrinders_ARC
+In Eclipse, create new Java Project 
+![](https://drive.google.com/uc?export=view&id=1cifaq36X2Xr_zBABQ_uhhNyMb1q9zged)
 
-</html>
+Enter "JavaGrinders_ARC" in the Project name and the rest should auto fill. Then click next.
+![](https://drive.google.com/uc?export=view&id=1jRd_80CaG4YvDj8H3SOtva_14QGGvnp9)
+> The image shows "OpenCVTest" in Project name. *Replace that with **"JavaGrinders_ARC"***.
+> Your default JRE should say JDK 11. I was using Java 1.8 when I took this screenshot.
+
+On the next screen, **uncheck the box for *Create module-info.java file***.
+![](https://drive.google.com/uc?export=view&id=19hDFQeVTm3LLJ9L7QfbS-onbXtioEchX)
+
+Click "Finish", and you're good to go!
+
+
+### START 'ER UP!
+In the **Package Explorer** window, navigate to **JavaGrinders_ARC** > **src** > **_ARC**. Double click on **ARCController.java** to open the class file.
+
+Click the green "play" button in the tool bar to start the tracking software! ![RUN](https://drive.google.com/uc?export=view&id=11kvYr6ONwblv2cENMPE8AlwLkxtMGKbM)
+
+### Troubleshooting with OpenCVTest
+
+Does ARCController.java not work? Then we can at least see if it's the OpenCV library that's flawed using the class files in OpenCVTest.
+
+In Eclipse, create new Java Project 
+![](https://drive.google.com/uc?export=view&id=1cifaq36X2Xr_zBABQ_uhhNyMb1q9zged)
+
+Enter "OpenCVTest" in the Project name and the rest should auto fill. Then click next.
+![](https://drive.google.com/uc?export=view&id=1jRd_80CaG4YvDj8H3SOtva_14QGGvnp9)
+> Your default JRE will probably say JDK 11. I was just using Java 1.8 when I took this screenshot.
+
+On the next screen,
+First, **uncheck the box for *Create module-info.java file***.
+![](https://drive.google.com/uc?export=view&id=19hDFQeVTm3LLJ9L7QfbS-onbXtioEchX)
+
+Then, under "Libraries", click "Add Library..."
+![](https://drive.google.com/uc?export=view&id=1gCoCs_jD0-pNJwHFXDNpNQ45vGV-dVLw)
+Select "User Library" and click "Next"
+![](https://drive.google.com/uc?export=view&id=1TS_20-V6jH7v5WlwkfwrU7FHsY76LThv)
+
+Click on "User Libraries...", then "New...", and enter "OpenCV" in the User library name and click "OK".
+![](https://drive.google.com/uc?export=view&id=1EjKM2np0_lpAN1C-m3TyHdBdsXGIMLRP)
+
+Now with the "OpenCV" selected, click on "Add External JARS..."
+![](https://drive.google.com/uc?export=view&id=14QKD7yNgCH3mCaju1O5smsLIW_ysGdma)
+
+Now you need to navigate to where your OpenCV JAR is. It's probably in `/opt/local/share/OpenCV/java`. Enter your path and click Go.
+![](https://drive.google.com/uc?export=view&id=1iWJdexXXHCMWoUheN5EtEucXDgAvmZom)
+
+Select the opencv-320.jar file and click Open.
+![](https://drive.google.com/uc?export=view&id=12f13_75R9iHl7wR86sgzCs84epi6PCIZ)
+
+Now, select "Native library location: (None)" and click Edit
+![](https://drive.google.com/uc?export=view&id=1vhV3uY2m7QQ_aO1YOhwqBJFD2B4jRGup)
+
+Click "External Folder...", click "Open", and then "OK"
+![](https://drive.google.com/uc?export=view&id=16QOZCl8cYpEovhLQ0aIkzSehYyzL0O5O)
+
+Click "OK"
+![](https://drive.google.com/uc?export=view&id=1PkMnABbuppcB-uWlOv_COTrlixEtOixL)
+
+Click "Finish"
+![](https://drive.google.com/uc?export=view&id=1WUkW2ZKYTIe357fGRLc6HNTuFcncS_4Y)
+
+Click "Finish"
+![](https://drive.google.com/uc?export=view&id=1OLm8fNmhRyDNfjeXS0OS4oUWAj5Wa6NY)
+
+Navigate to **Count.java** and run it to see if OpenCV can access any camera
+![](https://drive.google.com/uc?export=view&id=1xA5bVdRLeKyKao4xtumpdzaUVesAdsmf)
