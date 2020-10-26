@@ -100,7 +100,7 @@ Move the extracted <code>openjdk-11</code> folder to <code>/Library/Java/JavaVir
 </blockquote>
 <p>If the output reports Java 11 and Open JDK 11, you’re good to go.<br>
 Execute the following command to add the <code>JAVA_HOME</code> path to <code>~/.profile</code>.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> <span class="token string">'export JAVA_HOME=$(/usr/libexec/java_home -v11'</span><span class="token operator">&gt;&gt;</span>~/.profile
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> <span class="token string">'export JAVA_HOME=$(/usr/libexec/java_home -v11)'</span><span class="token operator">&gt;&gt;</span>~/.profile
 <span class="token function">source</span> ~/.profile
 </code></pre>
 <hr>
