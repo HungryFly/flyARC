@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -100,7 +100,7 @@ Move the extracted <code>openjdk-11</code> folder to <code>/Library/Java/JavaVir
 </blockquote>
 <p>If the output reports Java 11 and Open JDK 11, you’re good to go.<br>
 Execute the following command to add the <code>JAVA_HOME</code> path to <code>~/.profile</code>.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> <span class="token string">'export JAVA_HOME=$(/usr/libexec/java_home -v11)'</span><span class="token operator">&gt;&gt;</span>~/.profile
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> <span class="token string">'export JAVA_HOME=<span class="token variable"><span class="token variable">$(</span>/usr/libexec/java_home -v11<span class="token variable">)</span></span>'</span><span class="token operator">&gt;&gt;</span>~/.profile
 <span class="token function">source</span> ~/.profile
 </code></pre>
 <hr>
@@ -160,21 +160,34 @@ brew list 		<span class="token comment"># Confirm that everything is deleted</sp
 <span class="token function">sudo</span> port -d selfupdate
 </code></pre>
 <blockquote>
-<p>Sometimes, for some reason, you (or one of your co-workers) may have installed some packages with MacPorts but your bash may say port: command not found. In that case, simply install a new version of MacPorts (download binary from <a href="https://drive.google.com/file/d/1tB2OiZlVLn2_JyHm9fnQVSclAzd1Fo_o/view?usp=sharing">here</a> or the <a href="https://www.macports.org/install.php">official website</a>. You need to have installed Xcode already.) and then execute the commands above.</p>
+<p>Sometimes, for some reason, you (or one of your co-workers) may have installed some packages with MacPorts but your bash may say port: command not found. In that case, simply install a new version of MacPorts (download binary from <a href="https://drive.google.com/file/d/1tB2OiZlVLn2_JyHm9fnQVSclAzd1Fo_o/view?usp=sharing">here</a> or the <a href="https://www.macports.org/install.php">official website</a>. You need to have installed Xcode already.) and then execute the commands above. Before installing MacPorts, exit Terminal and restart it after the installation is complete.</p>
+</blockquote>
+<blockquote>
+<p>If <code>port -d selfupdate</code> fails with <code>Exit code: 10</code>, then follow directions <a href="https://trac.macports.org/wiki/howto/SyncingWithGit">here</a> to alternatively sync ports tree using Git over HTTPS</p>
 </blockquote>
 <hr>
 <h3 id="installing-necessary-packages-and-opencv-dependencies-with-homebrew">Installing necessary packages and OpenCV dependencies with Homebrew</h3>
 <p>Install <code>wget</code>:</p>
 <pre class=" language-bash"><code class="prism  language-bash">brew <span class="token function">install</span> <span class="token function">wget</span>
 </code></pre>
+<h4 id="install-ant">Install ant</h4>
 <p>We also need to install <code>ant</code>. In Homebrew, <code>ant</code> requires <code>openjdk</code> formula as a dependency, which currently (Oct 25, 2020) defaults to jdk-14. This version of jdk will not be compatible with our OpenCV and JavaGrinders libraries. So a workaround is to install <code>ant</code> with the <code>openjdk</code> dependency and then uninstall the <code>openjdk</code>.</p>
 <pre class=" language-bash"><code class="prism  language-bash">brew <span class="token function">install</span> ant <span class="token operator">&amp;&amp;</span> brew uninstall --ignore-dependencies openjdk
 </code></pre>
 <p>Test whether <code>ant</code> is installed:</p>
 <pre class=" language-bash"><code class="prism  language-bash">ant -v
 </code></pre>
+<p>The output should look something like</p>
+<pre><code>Apache Ant(TM) version 1.10.9 compiled on September 27 2020
+Trying the default build file: build.xml
+Buildfile: build.xml does not exist!
+Build failed
+</code></pre>
+<blockquote>
+<p>Note that the “Build failed” <em>does NOT</em> mean ant wasn’t installed correctly!</p>
+</blockquote>
 <p>Now, we have to add <code>$ANT_HOME</code> path to <code>~/.profile</code>.</p>
-<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> <span class="token string">'export ANT_HOME=(/usr/local/Cellar/ant/1.10.9/libexec/)'</span><span class="token operator">&gt;&gt;</span>~/.profile
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token keyword">echo</span> 'export ANT_HOME<span class="token operator">=</span><span class="token string">"/usr/local/Cellar/ant/1.10.9/libexec/"</span><span class="token operator">&gt;&gt;</span>~/.profile
 <span class="token function">source</span> ~/.profile
 </code></pre>
 <h3 id="check-.profile-and-update-.bash_profile">Check <code>.profile</code> and update <code>.bash_profile</code></h3>
@@ -186,7 +199,7 @@ brew list 		<span class="token comment"># Confirm that everything is deleted</sp
 export JAVA_HOME=$(/usr/libexec/java_home -v11)
 
 # ANT_HOME path    
-export ANT_HOME=$(/usr/local/Cellar/ant/1.10.9/libexec/)
+export ANT_HOME="/usr/local/Cellar/ant/1.10.9/libexec/"
 </code></pre>
 <blockquote>
 <p>There could be some additional lines there (for example, if you installed MacPorts, there will be a MacPorts PATH environmental variable there as well. But for now, what’s important is that the <code>JAVA_HOME</code> and <code>ANT_HOME</code> are in there.</p>
@@ -196,6 +209,9 @@ Now, let’s reload the <code>.profile</code> and make sure <code>JAVA_HOME</cod
 <pre class=" language-bash"><code class="prism  language-bash"><span class="token function">source</span> ~/.profile
 <span class="token keyword">echo</span> <span class="token variable">$JAVA_HOME</span>
 <span class="token keyword">echo</span> <span class="token variable">$ANT_HOME</span>
+</code></pre>
+<p>In Terminal, execute the following command:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">export</span> PATH<span class="token operator">=</span><span class="token variable">$PATH</span><span class="token keyword">:</span><span class="token variable">$ANT_HOME</span>/bin
 </code></pre>
 <p>Once you’ve verified that the <code>JAVA_HOME</code> and <code>ANT_HOME</code> paths are correctly set, we need to make sure that <code>.bash_profile</code> will pull up <code>.profile</code> when the Terminal shell starts. (<a href="https://unix.stackexchange.com/questions/45684/what-is-the-difference-between-profile-and-bash-profile">StackExchange: What is the difference between ~/.profile and ~/.bash_profile?</a>)</p>
 <pre class=" language-bash"><code class="prism  language-bash"><span class="token function">nano</span> ~/.bash_profile
@@ -213,7 +229,9 @@ export PATH=/usr/local/bin:$PATH
 <h3 id="install-cmake-gui">Install CMake GUI</h3>
 <p>OpenCV 3.2.0 is the version we want for the JavaGrinders_ARC. (OpenCV 3.3.x had USB unidentifiable serial connection issues and OpenCV 4.x require newer Java &amp; JavaGrinders library—in development.) But with Homebrew and MacPorts, OpenCV installation defaults to either 3.4.x or 4.x. So it’s best to build OpenCV 3.2.0 from source.</p>
 <p>To do so, we need CMake (and the GUI, optional but recommended).</p>
-<p>Download and install CMake GUI with a binary from <a href="https://drive.google.com/file/d/1Q53nhU_l59t3GiQuVtBdLQ-O6JhwDmcF/view?usp=sharing">here</a> or from the <a href="https://cmake.org/download/">official website</a>.</p>
+<p>We will install CMake GUI using Homebrew by executing the following command in Terminal:</p>
+<pre class=" language-bash"><code class="prism  language-bash">brew cask <span class="token function">install</span> cmake
+</code></pre>
 <hr>
 <p><br><br></p>
 <h2 id="installing-opencv-3.2.0">Installing OpenCV 3.2.0</h2>
@@ -255,19 +273,20 @@ Now the folder tree should look something like:</p>
 <pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cd</span> /Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0/build
 </code></pre>
 <p>Make sure you replace <code>YOUR_USERNAME_GOES_HERE</code> in the command above with your username! In my case, my username on Mac is jalab. So my command would be <code>cd /Users/jalab/Documents/opencv-3.2.0/build</code>.</p>
-<p>Now, launch the CMake GUI from Applications.<br>
-The icon will look like:<br>
-<img src="https://cmake.org/wp-content/uploads/2018/11/cmake_logo_slider.png" alt="CMake icon"></p>
+<p>Now, launch the CMake GUI from Terminal, by typing the command</p>
+<pre class=" language-bash"><code class="prism  language-bash">cmake-gui
+</code></pre>
 <p>Next to <strong>Where is the source code:</strong>, enter<br>
 <code>/Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0</code>.<br>
 Next to <strong>Where to build the binaries:</strong>, enter<br>
 <code>/Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0/build</code>.</p>
 <p>Now, click the <strong>Configure</strong> button. If you downloaded the CMakeCache.txt and placed it in the build folder, the fields should auto-fill. If there are any red lines after you’ve clicked Configure two times, check those settings and fill them in appropriately.</p>
 <p>Now, you can click the <strong>Generate</strong> button, and wait for the build to finish.<br>
-Go back to <strong>Terminal</strong>, and type the following command:</p>
+Go back to <strong>Terminal</strong> by pressing “<em>Command+Q</em>” on your keybard, and type the following command:</p>
 <pre class=" language-bash"><code class="prism  language-bash"><span class="token function">make</span> <span class="token function">install</span>
 </code></pre>
 <p>This will install OpenCV 3.2.0 in <code>/usr/local/share/OpenCV</code>.<br>
+Now we wait…<br>
 <br></p>
 <p>Now, you can verify that OpenCV 3.2.0 was installed using the following command:</p>
 <pre class=" language-bash"><code class="prism  language-bash">pkg-config --modversion opencv
