@@ -3,11 +3,11 @@
 (Updated 10/25/2020 by [Scarlet Park](mailto:jpark@scripps.edu))
 
 Versions used in this instruction support:
-- Mac OS X Catalina
-- Java (OpenJDK 11)
-- JavaGrinders Library version 56
-- OpenCV 3.2.0
-- Eclipse Photon
+: Mac OS X Catalina
+: Java (OpenJDK 11)
+: JavaGrinders Library version 56
+: OpenCV 3.2.0
+: Eclipse Photon
 
 ## Useful keyboard shortcuts and commands
 |      Function							 	|	Shortcut / command |
@@ -117,14 +117,16 @@ sudo port selfupdate
 sudo port -fp uninstall installed
 sudo port -d selfupdate
 ```
-> Sometimes, for some reason, you (or one of your co-workers) may have installed some packages with MacPorts but your bash may say port: command not found. In that case, simply install a new version of MacPorts (download binary from [here](https://drive.google.com/file/d/1tB2OiZlVLn2_JyHm9fnQVSclAzd1Fo_o/view?usp=sharing) or the [official website](https://www.macports.org/install.php). You need to have installed Xcode already.) and then execute the commands above.
+> Sometimes, for some reason, you (or one of your co-workers) may have installed some packages with MacPorts but your bash may say port: command not found. In that case, simply install a new version of MacPorts (download binary from [here](https://drive.google.com/file/d/1tB2OiZlVLn2_JyHm9fnQVSclAzd1Fo_o/view?usp=sharing) or the [official website](https://www.macports.org/install.php). You need to have installed Xcode already.) and then execute the commands above. Before installing MacPorts, exit Terminal and restart it after the installation is complete.
 
+>If `port -d selfupdate` fails with `Exit code: 10`, then follow directions [here](https://trac.macports.org/wiki/howto/SyncingWithGit) to alternatively sync ports tree using Git over HTTPS 
 ---
 ### Installing necessary packages and OpenCV dependencies with Homebrew
 Install `wget`:
 ```bash
 brew install wget
 ```
+#### Install ant
 We also need to install `ant`. In Homebrew, `ant` requires `openjdk` formula as a dependency, which currently (Oct 25, 2020) defaults to jdk-14. This version of jdk will not be compatible with our OpenCV and JavaGrinders libraries. So a workaround is to install `ant` with the `openjdk` dependency and then uninstall the `openjdk`.
 ```bash
 brew install ant && brew uninstall --ignore-dependencies openjdk
@@ -133,10 +135,19 @@ Test whether `ant` is installed:
 ```bash
 ant -v
 ```
+The output should look something like
+```
+Apache Ant(TM) version 1.10.9 compiled on September 27 2020
+Trying the default build file: build.xml
+Buildfile: build.xml does not exist!
+Build failed
+```
+> Note that the "Build failed" *does NOT* mean ant wasn't installed correctly!
+
 Now, we have to add `$ANT_HOME` path to `~/.profile`.
 
 ```bash
-echo 'export ANT_HOME=(/usr/local/Cellar/ant/1.10.9/libexec/)'>>~/.profile
+echo 'export ANT_HOME="/usr/local/Cellar/ant/1.10.9/libexec/">>~/.profile
 source ~/.profile
 ```
 ### Check `.profile` and update `.bash_profile`
@@ -150,7 +161,7 @@ This should look something like this:
 export JAVA_HOME=$(/usr/libexec/java_home -v11)
 
 # ANT_HOME path    
-export ANT_HOME=$(/usr/local/Cellar/ant/1.10.9/libexec/)
+export ANT_HOME="/usr/local/Cellar/ant/1.10.9/libexec/"
 ```
   > There could be some additional lines there (for example, if you installed MacPorts, there will be a MacPorts PATH environmental variable there as well. But for now, what's important is that the `JAVA_HOME` and `ANT_HOME` are in there.
 
@@ -161,6 +172,11 @@ source ~/.profile
 echo $JAVA_HOME
 echo $ANT_HOME
 ```
+In Terminal, execute the following command:
+```bash
+export PATH=$PATH:$ANT_HOME/bin
+```
+
 Once you've verified that the `JAVA_HOME` and `ANT_HOME` paths are correctly set, we need to make sure that `.bash_profile` will pull up `.profile` when the Terminal shell starts. ([StackExchange: What is the difference between ~/.profile and ~/.bash_profile?](https://unix.stackexchange.com/questions/45684/what-is-the-difference-between-profile-and-bash-profile))
 ```bash
 nano ~/.bash_profile
@@ -184,7 +200,10 @@ OpenCV 3.2.0 is the version we want for the JavaGrinders_ARC. (OpenCV 3.3.x had 
 
 To do so, we need CMake (and the GUI, optional but recommended).
 
-Download and install CMake GUI with a binary from [here](https://drive.google.com/file/d/1Q53nhU_l59t3GiQuVtBdLQ-O6JhwDmcF/view?usp=sharing) or from the [official website](https://cmake.org/download/).
+We will install CMake GUI using Homebrew by executing the following command in Terminal:
+```bash
+brew cask install cmake
+```
 
 ___
 <br><br>
@@ -239,9 +258,10 @@ cd /Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0/build
 ```
 Make sure you replace `YOUR_USERNAME_GOES_HERE` in the command above with your username! In my case, my username on Mac is jalab. So my command would be `cd /Users/jalab/Documents/opencv-3.2.0/build`.
 
-Now, launch the CMake GUI from Applications. 
-The icon will look like: <br/>
-![CMake icon](https://cmake.org/wp-content/uploads/2018/11/cmake_logo_slider.png)
+Now, launch the CMake GUI from Terminal, by typing the command
+```bash
+cmake-gui
+```
 
 Next to **Where is the source code:**, enter 
 `/Users/YOUR_USERNAME_GOES_HERE/Documents/opencv-3.2.0`.
@@ -251,11 +271,12 @@ Next to **Where to build the binaries:**, enter
 Now, click the **Configure** button. If you downloaded the CMakeCache.txt and placed it in the build folder, the fields should auto-fill. If there are any red lines after you've clicked Configure two times, check those settings and fill them in appropriately.
 
 Now, you can click the **Generate** button, and wait for the build to finish.
-Go back to **Terminal**, and type the following command:
+Go back to **Terminal** by pressing "*Command+Q*" on your keybard, and type the following command:
 ```bash
 make install
 ```
 This will install OpenCV 3.2.0 in `/usr/local/share/OpenCV`.
+Now we wait.....
 <br>
 
 Now, you can verify that OpenCV 3.2.0 was installed using the following command:
@@ -298,14 +319,14 @@ Last step! We're going to import two projects: JavaGrinders_ARC and OpenCV.
 ### Download project folders
 
 JavaGrinders_ARC
-- This contains the JavaGrinders library file `JavaGrinders.jar` and the class files used to run the automated animal & food tracking.
-- [Download link for JavaGrinders_ARC](https://drive.google.com/drive/folders/1nzrDxsqhuAkREa7OvQn64D3hXJSprGgV?usp=sharing)
+: This contains the JavaGrinders library file `JavaGrinders.jar` and the class files used to run the automated animal & food tracking.
+: [Download link for JavaGrinders_ARC](https://drive.google.com/drive/folders/1nzrDxsqhuAkREa7OvQn64D3hXJSprGgV?usp=sharing)
 <br>
 
 OpenCVTest
-- OpenCVTest contains few classes for testing whether OpenCV can detect cameras that are connected to your computer. 
-- You can use this to help troubleshoot where the problems is if you're having trouble with JavaGrinders_ARC.
-- [Download link for OpenCVTest](https://drive.google.com/drive/folders/1RXTNZlSu59gfDR2x52tb-iwLqSM1tsYm?usp=sharing)
+: OpenCVTest contains few classes for testing whether OpenCV can detect cameras that are connected to your computer. 
+: You can use this to help troubleshoot where the problems is if you're having trouble with JavaGrinders_ARC.
+: [Download link for OpenCVTest](https://drive.google.com/drive/folders/1RXTNZlSu59gfDR2x52tb-iwLqSM1tsYm?usp=sharing)
 
 Move the **OpenCVTest** and **JavaGrinders_ARC** folders into your Eclipse workspace, so the folder tree might look like this:
 ```
@@ -315,15 +336,15 @@ Workspace
 ```
 
 ### Loading JavaGrinders_ARC
-In Eclipse, create new Java Project <br/>
+In Eclipse, create new Java Project 
 ![](https://drive.google.com/uc?export=view&id=1cifaq36X2Xr_zBABQ_uhhNyMb1q9zged)
 
-Enter "JavaGrinders_ARC" in the Project name and the rest should auto fill. Then click next.<br/>
+Enter "JavaGrinders_ARC" in the Project name and the rest should auto fill. Then click next.
 ![](https://drive.google.com/uc?export=view&id=1jRd_80CaG4YvDj8H3SOtva_14QGGvnp9)
 > The image shows "OpenCVTest" in Project name. *Replace that with **"JavaGrinders_ARC"***.
 > Your default JRE should say JDK 11. I was using Java 1.8 when I took this screenshot.
 
-On the next screen, **uncheck the box for *Create module-info.java file***.<br/>
+On the next screen, **uncheck the box for *Create module-info.java file***.
 ![](https://drive.google.com/uc?export=view&id=19hDFQeVTm3LLJ9L7QfbS-onbXtioEchX)
 
 Click "Finish", and you're good to go!
@@ -332,56 +353,54 @@ Click "Finish", and you're good to go!
 ### START 'ER UP!
 In the **Package Explorer** window, navigate to **JavaGrinders_ARC** > **src** > **_ARC**. Double click on **ARCController.java** to open the class file.
 
-Click the green "play" button in the tool bar to start the tracking software! <br/>
-![RUN](https://drive.google.com/uc?export=view&id=11kvYr6ONwblv2cENMPE8AlwLkxtMGKbM)
+Click the green "play" button in the tool bar to start the tracking software! ![RUN](https://drive.google.com/uc?export=view&id=11kvYr6ONwblv2cENMPE8AlwLkxtMGKbM)
 
 ### Troubleshooting with OpenCVTest
 
 Does ARCController.java not work? Then we can at least see if it's the OpenCV library that's flawed using the class files in OpenCVTest.
 
-In Eclipse, create new Java Project <br/>
+In Eclipse, create new Java Project 
 ![](https://drive.google.com/uc?export=view&id=1cifaq36X2Xr_zBABQ_uhhNyMb1q9zged)
 
-Enter "OpenCVTest" in the Project name and the rest should auto fill. Then click next.<br/>
+Enter "OpenCVTest" in the Project name and the rest should auto fill. Then click next.
 ![](https://drive.google.com/uc?export=view&id=1jRd_80CaG4YvDj8H3SOtva_14QGGvnp9)
 > Your default JRE will probably say JDK 11. I was just using Java 1.8 when I took this screenshot.
 
 On the next screen,
-First, **uncheck the box for *Create module-info.java file***.<br/>
+First, **uncheck the box for *Create module-info.java file***.
 ![](https://drive.google.com/uc?export=view&id=19hDFQeVTm3LLJ9L7QfbS-onbXtioEchX)
 
-Then, under "Libraries", click "Add Library..."<br/>
+Then, under "Libraries", click "Add Library..."
 ![](https://drive.google.com/uc?export=view&id=1gCoCs_jD0-pNJwHFXDNpNQ45vGV-dVLw)
-
-Select "User Library" and click "Next"<br/>
+Select "User Library" and click "Next"
 ![](https://drive.google.com/uc?export=view&id=1TS_20-V6jH7v5WlwkfwrU7FHsY76LThv)
 
-Click on "User Libraries...", then "New...", and enter "OpenCV" in the User library name and click "OK".<br/>
+Click on "User Libraries...", then "New...", and enter "OpenCV" in the User library name and click "OK".
 ![](https://drive.google.com/uc?export=view&id=1EjKM2np0_lpAN1C-m3TyHdBdsXGIMLRP)
 
-Now with the "OpenCV" selected, click on "Add External JARS..."<br/>
+Now with the "OpenCV" selected, click on "Add External JARS..."
 ![](https://drive.google.com/uc?export=view&id=14QKD7yNgCH3mCaju1O5smsLIW_ysGdma)
 
-Now you need to navigate to where your OpenCV JAR is. It's probably in `/opt/local/share/OpenCV/java`. Enter your path and click Go.<br/>
+Now you need to navigate to where your OpenCV JAR is. It's probably in `/opt/local/share/OpenCV/java`. Enter your path and click Go.
 ![](https://drive.google.com/uc?export=view&id=1iWJdexXXHCMWoUheN5EtEucXDgAvmZom)
 
-Select the opencv-320.jar file and click Open.<br/>
+Select the opencv-320.jar file and click Open.
 ![](https://drive.google.com/uc?export=view&id=12f13_75R9iHl7wR86sgzCs84epi6PCIZ)
 
-Now, select "Native library location: (None)" and click Edit<br/>
+Now, select "Native library location: (None)" and click Edit
 ![](https://drive.google.com/uc?export=view&id=1vhV3uY2m7QQ_aO1YOhwqBJFD2B4jRGup)
 
-Click "External Folder...", click "Open", and then "OK"<br/>
+Click "External Folder...", click "Open", and then "OK"
 ![](https://drive.google.com/uc?export=view&id=16QOZCl8cYpEovhLQ0aIkzSehYyzL0O5O)
 
-Click "OK"<br/>
+Click "OK"
 ![](https://drive.google.com/uc?export=view&id=1PkMnABbuppcB-uWlOv_COTrlixEtOixL)
 
-Click "Finish"<br/>
+Click "Finish"
 ![](https://drive.google.com/uc?export=view&id=1WUkW2ZKYTIe357fGRLc6HNTuFcncS_4Y)
 
-Click "Finish"<br/>
+Click "Finish"
 ![](https://drive.google.com/uc?export=view&id=1OLm8fNmhRyDNfjeXS0OS4oUWAj5Wa6NY)
 
-Navigate to **Count.java** and run it to see if OpenCV can access any camera<br/>
+Navigate to **Count.java** and run it to see if OpenCV can access any camera
 ![](https://drive.google.com/uc?export=view&id=1xA5bVdRLeKyKao4xtumpdzaUVesAdsmf)
