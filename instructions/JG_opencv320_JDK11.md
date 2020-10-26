@@ -64,7 +64,7 @@ sudo javac -version
 If the output reports Java 11 and Open JDK 11, you're good to go.
 Execute the following command to add the `JAVA_HOME` path to `~/.profile`.
 ```bash
-echo 'export JAVA_HOME=$(/usr/libexec/java_home -v11'>>~/.profile
+echo 'export JAVA_HOME=$(/usr/libexec/java_home -v11)'>>~/.profile
 source ~/.profile
 ```
 ----
